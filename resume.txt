@@ -1,0 +1,49 @@
+ALEXANDER S. LOPEZ
++63 910 - 1741 - 416 | alexandersanalilalopez05@gmail.com | Camachiles Phase 2, Mabalacat City , Pampanga
+https://www.linkedin.com/in/lopez-alexander-s-662407353/
+PROFESSIONAL EXPERIENCE
+Technical Autonomy: Assumed full responsibility for the entire IT infrastructure on day one without prior
+training ; served as the sole IT Specialist for the first half of my tenure, managing all technology operations for
+200+ employees.
+Full-Stack Development: Developed a custom Asset Management System using Next.js 15 and Supabase,
+featuring an automated QR-tracking ecosystem and a dynamic schema-driven architecture for real-time
+inventory control.
+Network & Connectivity: Manage and maintain IT infrastructure including Ubiquiti UniFi wireless controllers,
+network devices, and dual ISP traffic segregation via a custom-implemented Network Monitoring System
+(NMS).
+Access & Security: Administer company-wide access control using ZKTeco (Biometric/Sprout integration) and
+CrossChex Standard (RFID); monitor Hikvision CCTV systems to ensure site security.
+Cloud Administration: Manage Microsoft 365 and Google Workspace environments; led the full-scale email
+system migration from M365 to Google Workspace.
+Technical Support: Provide comprehensive Level 1–3 support covering hardware, software, and complex
+network issues for the entire organization.
+System Administration: Perform OS installation, re-imaging, and software deployment while managing firewall
+security policies to block malicious or non-work-related traffic.
+IT SPECIALIST / IT ADMINISTRATOR — SHOREAGENTS | 2025–PRESENT
+IT INTERN (ON-THE-JOB TRAINING) — VXI GLOBAL HOLDINGS B.V | SEPT 2024–JAN 2025
+Provided technical support, VPN configuration, and troubleshooting.
+Assisted in Avaya configuration and system maintenance.
+Performed re-imaging, system upgrades, and software installation.
+Managed backups, recovery, and hardware setup.
+EDUCATION
+Bachelor of Science in Information Technology — Major in Network Administration
+System Plus College Foundation | 2021 - 2025
+Developed responsive UI using HTML, CSS, Bootstrap, and JavaScript.
+Contributed to full-stack development using Django, Redis, PostgreSQL, AWS, and Docker.
+Collaborated with team for efficient development workflow.
+Graduated with Cum Laude
+PERMITEASE: CLOUD-BASED SCHOOL AUTOMATED EXAM PERMIT SYSTEM | 2025
+CAPSTONE PROJECT
+TECHNICAL SKILLS
+IT & Networking:
+Network Administration • System Administration • VPN Configuration • Hardware Support • OS Installation &
+Re-imaging • Firewall Configuration • Network Monitoring • CCTV Installation, Monitoring & Management
+Access Control: ZKTeco Attendance Management (Biometric & Sprout Integration) • CrossChex Standard (RFID
+Room Access).
+Automation & Workflow:
+Microsoft Power Apps • Google Apps Script • Microsoft 365 Automations • Data Integration Workflows
+Programming & Development:
+Next.js 15 • React 19 • TypeScript • HTML • CSS • JavaScript • ReactJS • Python (Django) • PostgreSQL •
+VB.NET • Tailwind CSS • shadcn/UI • Supabase • TanStack Query • Zod • Recharts • Lucide Icons
+Tools & Platforms:
+Antigravity • Cursor • Docker • GitHub • Visual Studio Code • AWS • Docker • Figma • Canva
