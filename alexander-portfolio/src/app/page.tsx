@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import LiquidMask from "@/components/LiquidMask";
 import GlobalLiquidBackground from "@/components/GlobalLiquidBackground";
 import BentoGrid from "@/components/BentoGrid";
@@ -11,15 +14,16 @@ import {
   Download,
   ArrowRight,
   Monitor,
-  Rocket
+  Rocket,
+  Menu,
+  X
 } from "lucide-react";
 
-export const metadata = {
-  title: "Alexander Lopez | Portfolio",
-  description: "IT Specialist and Full-Stack Developer with a focus on enterprise-grade infrastructure and modern web development.",
-};
+
 
 export default function Home() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <main className="relative min-h-screen bg-background overflow-x-hidden selection:bg-primary/30">
       <GlobalLiquidBackground />
@@ -31,38 +35,59 @@ export default function Home() {
       </div>
 
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 w-full z-50 px-6 py-6 flex items-center justify-between">
+      <nav className="fixed top-0 left-0 w-full z-50 px-4 sm:px-6 py-4 sm:py-6 flex items-center justify-between backdrop-blur-sm">
         <div className="flex items-center gap-2">
           <div className="w-10 h-10 bg-primary/10 border border-primary/20 flex items-center justify-center rounded-xl backdrop-blur-md">
             <p className="font-bold text-lg">AL</p>
           </div>
           <span className="font-bold tracking-tight hidden sm:block">Alexander Lopez</span>
         </div>
-        <div className="flex items-center gap-6 bg-card/40 border border-border/50 px-6 py-2 rounded-2xl backdrop-blur-xl">
+
+        {/* Desktop Nav Links */}
+        <div className="hidden md:flex items-center gap-6 bg-card/40 border border-border/50 px-6 py-2 rounded-2xl backdrop-blur-xl">
           <a href="#about" className="text-sm font-medium hover:text-primary transition-colors">About</a>
           <a href="#experience" className="text-sm font-medium hover:text-primary transition-colors">Experience</a>
           <a href="#projects" className="text-sm font-medium hover:text-primary transition-colors">Projects</a>
           <a href="#contact" className="text-sm font-medium hover:text-primary transition-colors">Contact</a>
         </div>
+
         <div className="flex items-center gap-2">
-          <Button variant="ghost" size="icon" className="rounded-xl flex-shrink-0">
+          <Button variant="ghost" size="icon" className="rounded-xl flex-shrink-0 hidden sm:flex">
             <Github size={20} />
           </Button>
-          <Button variant="default" size="icon" className="rounded-xl flex-shrink-0 bg-primary text-primary-foreground">
+          <Button variant="default" size="icon" className="rounded-xl flex-shrink-0 bg-primary text-primary-foreground hidden sm:flex">
             <Linkedin size={20} />
+          </Button>
+          {/* Mobile Hamburger */}
+          <Button variant="ghost" size="icon" className="rounded-xl flex-shrink-0 md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
+            {menuOpen ? <X size={20} /> : <Menu size={20} />}
           </Button>
         </div>
       </nav>
 
+      {/* Mobile Menu Dropdown */}
+      {menuOpen && (
+        <div className="fixed top-[72px] left-0 w-full z-40 bg-background/95 backdrop-blur-xl border-b border-border/50 flex flex-col items-center gap-6 py-8 md:hidden">
+          <a href="#about" onClick={() => setMenuOpen(false)} className="text-base font-semibold hover:text-primary transition-colors">About</a>
+          <a href="#experience" onClick={() => setMenuOpen(false)} className="text-base font-semibold hover:text-primary transition-colors">Experience</a>
+          <a href="#projects" onClick={() => setMenuOpen(false)} className="text-base font-semibold hover:text-primary transition-colors">Projects</a>
+          <a href="#contact" onClick={() => setMenuOpen(false)} className="text-base font-semibold hover:text-primary transition-colors">Contact</a>
+          <div className="flex items-center gap-3">
+            <Button variant="ghost" size="icon" className="rounded-xl"><Github size={20} /></Button>
+            <Button variant="default" size="icon" className="rounded-xl bg-primary text-primary-foreground"><Linkedin size={20} /></Button>
+          </div>
+        </div>
+      )}
+
       {/* Hero Section */}
-      <section className="relative px-6 pt-32 pb-24 md:pt-48 md:pb-40 max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-16">
+      <section className="relative px-4 sm:px-6 pt-28 pb-16 md:pt-48 md:pb-40 max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-10 md:gap-16">
         <div className="flex-1 space-y-8 text-center md:text-left">
           <Badge variant="outline" className="px-4 py-1.5 border-primary/20 bg-primary/5 text-primary text-xs uppercase tracking-widest font-semibold flex items-center gap-2 w-fit mx-auto md:mx-0">
             <Monitor className="w-3 h-3" />
             IT Specialist & Full-Stack Developer
           </Badge>
 
-          <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.9]">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.9]">
             TRANSFORMING <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-600">INFRASTRUCTURE.</span>
           </h1>
@@ -85,7 +110,7 @@ export default function Home() {
         </div>
 
         {/* Hero Visual Block */}
-        <div className="flex-1 w-full max-w-[800px] aspect-[4/5] relative group scale-110">
+        <div className="flex-1 w-full max-w-[340px] sm:max-w-[480px] md:max-w-[600px] aspect-[4/5] relative group">
           <div className="absolute inset-0 bg-primary/20 blur-[100px] rounded-full group-hover:bg-primary/30 transition-colors animate-pulse" />
           <div className="relative w-full h-full bg-card/10 border border-white/5 rounded-[40px] overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] backdrop-blur-sm">
             <LiquidMask
@@ -127,7 +152,7 @@ export default function Home() {
           <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mb-10 border border-primary/20">
             <Rocket className="text-primary w-10 h-10" />
           </div>
-          <h2 className="text-5xl md:text-7xl font-black text-center mb-12 italic">
+          <h2 className="text-3xl sm:text-5xl md:text-7xl font-black text-center mb-8 md:mb-12 italic">
             CRAFTING MODERN <br />
             <span className="text-muted-foreground not-italic">TECHNICAL SOLUTIONS.</span>
           </h2>
@@ -168,11 +193,11 @@ export default function Home() {
       <section id="contact" className="py-24 px-6 bg-primary text-primary-foreground relative overflow-hidden">
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-white/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
         <div className="max-w-4xl mx-auto text-center relative z-10 flex flex-col items-center">
-          <h2 className="text-4xl md:text-6xl font-black mb-8 leading-tight">LET'S BUILD THE <br />NEXT GENERATION OF IT.</h2>
+          <h2 className="text-3xl sm:text-4xl md:text-6xl font-black mb-8 leading-tight">LET&apos;S BUILD THE <br />NEXT GENERATION OF IT.</h2>
           <div className="flex flex-wrap items-center justify-center gap-6">
-            <Button className="bg-white text-black hover:bg-white/90 font-bold h-14 px-8 rounded-2xl">
-              <Mail className="mr-2" />
-              alexandersanalilalopez05@gmail.com
+            <Button className="bg-white text-black hover:bg-white/90 font-bold h-14 px-6 rounded-2xl max-w-full">
+              <Mail className="mr-2 shrink-0" />
+              <span className="truncate text-sm sm:text-base">alexandersanalilalopez05@gmail.com</span>
             </Button>
             <div className="flex gap-4">
               <Button variant="outline" className="border-white/20 hover:bg-white/10 rounded-2xl size-14">
