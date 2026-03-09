@@ -1,0 +1,6 @@
+{
+    "buildCommand": "cd alexander-portfolio && npm run build",
+    "outputDirectory": "alexander-portfolio/.next",
+    "installCommand": "cd alexander-portfolio && npm install",
+    "framework": "nextjs"
+}
