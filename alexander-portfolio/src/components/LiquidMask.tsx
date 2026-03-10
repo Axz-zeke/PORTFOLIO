@@ -7,6 +7,7 @@ interface LiquidMaskProps {
   imageBase: string;
   imageHover: string;
   className?: string;
+  style?: React.CSSProperties;
   splatRadius?: number;
   splatStrength?: number;
   dissipation?: number;
@@ -69,8 +70,8 @@ const displayFragmentShader = `
     vec4 hover = texture2D(tHover, vUv);
     float mask = texture2D(tMask, vUv).r;
     
-    // Gooey border effect
-    float edge = 0.05;
+    // High-quality gooey border effect
+    float edge = 0.15;
     float alpha = smoothstep(uThreshold - edge, uThreshold + edge, mask);
     
     gl_FragColor = mix(base, hover, alpha);
@@ -85,6 +86,7 @@ export default function LiquidMask({
   splatStrength = 0.5,
   dissipation = 0.98,
   threshold = 0.15,
+  style = {},
 }: LiquidMaskProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
@@ -106,12 +108,22 @@ export default function LiquidMask({
     rendererRef.current = renderer;
 
     const loader = new THREE.TextureLoader();
-    const baseTex = loader.load(imageBase);
-    const hoverTex = loader.load(imageHover);
-    baseTex.minFilter = THREE.LinearFilter;
-    hoverTex.minFilter = THREE.LinearFilter;
+    const baseTex = loader.load(imageBase, (tex: THREE.Texture) => {
+      tex.minFilter = THREE.LinearMipmapLinearFilter;
+      tex.magFilter = THREE.LinearFilter;
+      tex.generateMipmaps = true;
+      const anisotropy = renderer.capabilities.getMaxAnisotropy();
+      tex.anisotropy = anisotropy;
+    });
+    const hoverTex = loader.load(imageHover, (tex: THREE.Texture) => {
+      tex.minFilter = THREE.LinearMipmapLinearFilter;
+      tex.magFilter = THREE.LinearFilter;
+      tex.generateMipmaps = true;
+      const anisotropy = renderer.capabilities.getMaxAnisotropy();
+      tex.anisotropy = anisotropy;
+    });
 
-    const simRes = 512;
+    const simRes = 1024; // Doubled resolution for much smoother mask edges
     let renderTargetA = new THREE.WebGLRenderTarget(simRes, simRes, {
       type: THREE.HalfFloatType,
       format: THREE.RGBAFormat,
@@ -211,5 +223,5 @@ export default function LiquidMask({
     };
   }, [imageBase, imageHover, splatRadius, splatStrength, dissipation, threshold]);
 
-  return <div ref={containerRef} className={`w-full h-full ${className}`} />;
+  return <div ref={containerRef} className={`w-full h-full ${className}`} style={style} />;
 }

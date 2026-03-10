@@ -19,201 +19,212 @@ import {
   X
 } from "lucide-react";
 
-
-
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <main className="relative min-h-screen bg-background overflow-x-hidden selection:bg-primary/30">
-      <GlobalLiquidBackground />
-      {/* Background Decor */}
-      <div className="absolute top-0 left-0 w-full h-full pointer-events-none -z-10">
-        <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-primary/5 blur-[120px] rounded-full animate-pulse" />
-        <div className="absolute bottom-[-5%] left-[-5%] w-[400px] h-[400px] bg-blue-500/10 blur-[100px] rounded-full" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(0,0,0,0)_0%,var(--background)_100%)] opacity-50" />
-      </div>
+    <main className="relative min-h-screen overflow-x-hidden bg-[#f8f9fb]" style={{ color: "#111827" }}>
+      {/* NO GlobalLiquidBackground here – it lives inside the hero section */}
 
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 w-full z-50 px-4 sm:px-6 py-4 sm:py-6 flex items-center justify-between backdrop-blur-sm">
-        <div className="flex items-center gap-2">
-          <div className="w-10 h-10 bg-primary/10 border border-primary/20 flex items-center justify-center rounded-xl backdrop-blur-md">
-            <p className="font-bold text-lg">AL</p>
-          </div>
-          <span className="font-bold tracking-tight hidden sm:block">Alexander Lopez</span>
+      <nav className="fixed top-0 left-0 w-full z-50 px-6 py-6 flex items-center justify-between">
+        {/* Name — top left, stacked like reference */}
+        <div className="flex flex-col leading-none cursor-pointer">
+          <span className="font-black text-xs uppercase tracking-tighter text-black">Alexander</span>
+          <span className="font-black text-xs uppercase tracking-tighter text-black">Lopez</span>
         </div>
 
         {/* Desktop Nav Links */}
-        <div className="hidden md:flex items-center gap-6 bg-card/40 border border-border/50 px-6 py-2 rounded-2xl backdrop-blur-xl">
-          <a href="#about" className="text-sm font-medium hover:text-primary transition-colors">About</a>
-          <a href="#experience" className="text-sm font-medium hover:text-primary transition-colors">Experience</a>
-          <a href="#projects" className="text-sm font-medium hover:text-primary transition-colors">Projects</a>
-          <a href="#contact" className="text-sm font-medium hover:text-primary transition-colors">Contact</a>
+        <div className="hidden md:flex items-center gap-6 bg-white/60 border border-black/10 px-6 py-2 rounded-2xl backdrop-blur-xl shadow-sm">
+          <a href="#about" className="text-xs font-black uppercase tracking-widest hover:text-blue-600 transition-colors">About</a>
+          <a href="#experience" className="text-xs font-black uppercase tracking-widest hover:text-blue-600 transition-colors">Experience</a>
+          <a href="#projects" className="text-xs font-black uppercase tracking-widest hover:text-blue-600 transition-colors">Projects</a>
+          <a href="#contact" className="text-xs font-black uppercase tracking-widest hover:text-blue-600 transition-colors">Contact</a>
         </div>
 
         <div className="flex items-center gap-2">
-          <Button variant="ghost" size="icon" className="rounded-xl flex-shrink-0 hidden sm:flex">
-            <Github size={20} />
-          </Button>
-          <Button variant="default" size="icon" className="rounded-xl flex-shrink-0 bg-primary text-primary-foreground hidden sm:flex">
-            <Linkedin size={20} />
-          </Button>
+          <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+            <button className="h-9 w-9 flex items-center justify-center rounded-xl border border-black/10 bg-white/60 backdrop-blur-md hover:bg-black hover:text-white transition-all">
+              <Github size={16} />
+            </button>
+          </a>
+          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+            <button className="h-9 px-5 flex items-center gap-2 rounded-xl border border-black bg-black text-white text-[10px] font-black uppercase tracking-widest hover:bg-black/80 transition-all">
+              Let's Talk
+            </button>
+          </a>
           {/* Mobile Hamburger */}
-          <Button variant="ghost" size="icon" className="rounded-xl flex-shrink-0 md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
-            {menuOpen ? <X size={20} /> : <Menu size={20} />}
-          </Button>
+          <button
+            className="rounded-xl flex-shrink-0 md:hidden h-9 w-9 flex items-center justify-center border border-black/10 bg-white/60"
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            {menuOpen ? <X size={18} /> : <Menu size={18} />}
+          </button>
         </div>
       </nav>
 
-      {/* Mobile Menu Dropdown */}
+      {/* Mobile Menu */}
       {menuOpen && (
-        <div className="fixed top-[72px] left-0 w-full z-40 bg-background/95 backdrop-blur-xl border-b border-border/50 flex flex-col items-center gap-6 py-8 md:hidden">
-          <a href="#about" onClick={() => setMenuOpen(false)} className="text-base font-semibold hover:text-primary transition-colors">About</a>
-          <a href="#experience" onClick={() => setMenuOpen(false)} className="text-base font-semibold hover:text-primary transition-colors">Experience</a>
-          <a href="#projects" onClick={() => setMenuOpen(false)} className="text-base font-semibold hover:text-primary transition-colors">Projects</a>
-          <a href="#contact" onClick={() => setMenuOpen(false)} className="text-base font-semibold hover:text-primary transition-colors">Contact</a>
-          <div className="flex items-center gap-3">
-            <Button variant="ghost" size="icon" className="rounded-xl"><Github size={20} /></Button>
-            <Button variant="default" size="icon" className="rounded-xl bg-primary text-primary-foreground"><Linkedin size={20} /></Button>
-          </div>
+        <div className="fixed top-[72px] left-0 w-full z-40 bg-white/95 backdrop-blur-xl border-b border-black/10 flex flex-col items-center gap-6 py-8 md:hidden">
+          {["#about", "#experience", "#projects", "#contact"].map((href) => (
+            <a key={href} href={href} onClick={() => setMenuOpen(false)}
+              className="text-sm font-black uppercase tracking-widest hover:text-blue-600 transition-colors">
+              {href.replace("#", "")}
+            </a>
+          ))}
         </div>
       )}
 
-      {/* Hero Section */}
-      <section className="relative px-4 sm:px-6 pt-28 pb-16 md:pt-48 md:pb-40 max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-10 md:gap-16">
-        <div className="flex-1 space-y-8 text-center md:text-left">
-          <Badge variant="outline" className="px-4 py-1.5 border-primary/20 bg-primary/5 text-primary text-xs uppercase tracking-widest font-semibold flex items-center gap-2 w-fit mx-auto md:mx-0">
-            <Monitor className="w-3 h-3" />
-            IT Specialist & Full-Stack Developer
-          </Badge>
+      {/* HERO SECTION — has its own background contained inside it */}
+      <section className="relative w-full overflow-hidden" style={{ minHeight: "100svh" }}>
+        {/* Animated background: only visible here */}
+        <GlobalLiquidBackground />
 
-          <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.9]">
-            TRANSFORMING <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-600">INFRASTRUCTURE.</span>
-          </h1>
-
-          <p className="max-w-xl text-lg text-muted-foreground font-medium leading-relaxed mx-auto md:mx-0">
-            Building digital ecosystems with <span className="text-foreground">Next.js 15</span> and managing enterprise networks for over 200+ employees. Passionate about
-            <span className="text-foreground"> technical autonomy</span> and efficient system operations.
-          </p>
-
-          <div className="flex flex-col sm:flex-row items-center gap-4 pt-4 justify-center md:justify-start">
-            <Button className="h-14 px-8 rounded-2xl bg-primary text-primary-foreground font-bold group shadow-xl shadow-primary/20">
-              Download Resume
-              <Download className="ml-2 w-5 h-5 group-hover:-translate-y-1 transition-transform" />
-            </Button>
-            <Button variant="outline" className="h-14 px-8 rounded-2xl border-border hover:bg-muted font-bold group transition-all">
-              View Projects
-              <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Button>
-          </div>
-        </div>
-
-        {/* Hero Visual Block */}
-        <div className="flex-1 w-full max-w-[340px] sm:max-w-[480px] md:max-w-[600px] aspect-[4/5] relative group">
-          <div className="absolute inset-0 bg-primary/20 blur-[100px] rounded-full group-hover:bg-primary/30 transition-colors animate-pulse" />
-          <div className="relative w-full h-full bg-card/10 border border-white/5 rounded-[40px] overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] backdrop-blur-sm">
-            <LiquidMask
-              imageBase="/funko.png"
-              imageHover="/PROFILE.png"
-              className="w-full h-full"
-              splatRadius={0.15}
-              splatStrength={0.5}
-            />
-
-            {/* Floating Elements */}
-            <div className="absolute top-4 right-4 z-10">
-              <div className="bg-black/50 backdrop-blur-md px-4 py-2 rounded-xl flex items-center gap-2 border border-white/10">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                <span className="text-xs font-bold text-white uppercase tracking-tighter">Available for Hire</span>
-              </div>
+        <div className="relative z-10 px-6 pt-32 pb-16 md:pt-52 md:pb-40 max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-10 md:gap-20">
+          {/* Left Column — Text */}
+          <div className="flex-1 space-y-8 text-center md:text-left">
+            <div className="inline-flex items-center gap-2 border border-black/10 bg-white/60 backdrop-blur-md px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest text-black/60">
+              <Monitor className="w-3 h-3" />
+              IT Specialist &amp; Full-Stack Developer
             </div>
 
-            <div className="absolute bottom-6 left-6 z-10 flex flex-col gap-1">
-              <p className="text-white text-xl font-black italic tracking-tight drop-shadow-lg">Alexander S. Lopez</p>
-              <p className="text-white/70 text-[10px] uppercase font-bold tracking-widest drop-shadow-md">Since 2021 • Mabalacat City, PH</p>
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] text-black">
+              TRANSFORM<br />
+              <span style={{ WebkitTextStroke: "2px #111", color: "transparent" }}>
+                ING INFRA.
+              </span>
+            </h1>
+
+            <p className="max-w-md text-sm font-medium leading-relaxed text-black/50 mx-auto md:mx-0 uppercase tracking-wide">
+              Building digital ecosystems with <strong className="text-black/80">Next.js 15</strong> and managing enterprise networks for 200+ employees. Passionate about <strong className="text-black/80">technical autonomy</strong>.
+            </p>
+
+            <div className="flex flex-col sm:flex-row items-center gap-4 justify-center md:justify-start">
+              <button className="h-14 px-8 rounded-2xl bg-black text-white text-sm font-black uppercase tracking-widest flex items-center gap-2 hover:scale-[1.03] active:scale-[0.97] transition-transform shadow-xl shadow-black/20">
+                Download Resume
+                <Download className="w-4 h-4" />
+              </button>
+              <button className="h-14 px-8 rounded-2xl border border-black/20 bg-white/60 backdrop-blur-md text-sm font-black uppercase tracking-widest flex items-center gap-2 hover:bg-black hover:text-white transition-all group">
+                View Projects
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </button>
+            </div>
+          </div>
+
+          {/* Right Column — Liquid Mask Portrait — neutralized to background color */}
+          <div className="flex-shrink-0 w-full max-w-[360px] sm:max-w-[440px] md:max-w-[520px] aspect-[3/4] relative">
+            <div className="absolute inset-4 rounded-[40px] bg-black/[0.03] blur-xl" />
+            <div className="relative w-full h-full rounded-[40px] overflow-hidden border border-black/[0.08] shadow-lg" style={{ background: "#f8f9fb" }}>
+              <LiquidMask
+                imageBase="/funko.png"
+                imageHover="/PROFILE.png"
+                className="w-full h-full filter blur-[0.8px] [text-rendering:optimizeLegibility]"
+                style={{ filter: "drop-shadow(0 0 2px rgba(0,0,0,0.03)) blur(0.6px)" }}
+                splatRadius={0.15}
+                splatStrength={0.5}
+              />
+
+              <div className="absolute top-4 right-4 z-10">
+                <div className="bg-white/70 backdrop-blur-md px-4 py-2 rounded-xl flex items-center gap-2 border border-black/10 shadow-sm">
+                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                  <span className="text-[10px] font-black uppercase tracking-tighter text-black">Available for Hire</span>
+                </div>
+              </div>
+
+              <div className="absolute bottom-6 left-6 z-10">
+                <p className="text-black text-xl font-black italic tracking-tight drop-shadow-sm">Alexander S. Lopez</p>
+                <p className="text-black/50 text-[10px] uppercase font-black tracking-widest mt-1">Since 2021 • Mabalacat City, PH</p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Experience / Info Section with Bento Grid */}
-      <section id="experience" className="py-24 bg-muted/30">
+      {/* Marquee divider — cohesive light theme */}
+      <div className="w-full overflow-hidden pointer-events-none select-none py-10 border-y border-black/5 bg-white/40">
+        <p className="text-[10vw] font-black tracking-tighter text-black/[0.03] whitespace-nowrap">
+          IT SPECIALIST &nbsp;&nbsp; FULL-STACK DEV &nbsp;&nbsp; NETWORK ADMIN &nbsp;&nbsp;
+          IT SPECIALIST &nbsp;&nbsp; FULL-STACK DEV &nbsp;&nbsp; NETWORK ADMIN
+        </p>
+      </div>
+
+      {/* Experience / Bento Grid — fitted to viewport */}
+      <section id="experience" className="min-h-screen flex flex-col justify-center py-24 bg-transparent">
         <div className="max-w-7xl mx-auto px-6 mb-16 text-center">
-          <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-4">ENGINEERING <span className="opacity-40">&</span> DESIGN</h2>
-          <p className="text-muted-foreground uppercase tracking-[0.2em] font-bold text-sm">Professional Experience & Educational Foundation</p>
+          <h2 className="text-4xl md:text-6xl font-black tracking-tight mb-4 text-black">
+            ENGINEERING <span className="text-black/10">&</span> DESIGN
+          </h2>
+          <p className="text-black/40 uppercase tracking-[0.2em] font-black text-[10px]">Professional Experience &amp; Educational Foundation</p>
         </div>
         <BentoGrid />
       </section>
 
-      {/* Projects Hook Section */}
-      <section id="projects" className="py-32 px-6">
+      {/* Projects Hook Section — fitted to viewport and light theme */}
+      <section id="projects" className="min-h-screen flex flex-col justify-center py-32 px-6 bg-transparent">
         <div className="max-w-7xl mx-auto flex flex-col items-center">
-          <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mb-10 border border-primary/20">
-            <Rocket className="text-primary w-10 h-10" />
-          </div>
-          <h2 className="text-3xl sm:text-5xl md:text-7xl font-black text-center mb-8 md:mb-12 italic">
+          <h2 className="text-3xl sm:text-5xl md:text-8xl font-black text-center mb-16 italic text-black">
             CRAFTING MODERN <br />
-            <span className="text-muted-foreground not-italic">TECHNICAL SOLUTIONS.</span>
+            <span style={{ WebkitTextStroke: "2px rgba(0,0,0,0.1)", color: "transparent" }}>SOLUTIONS.</span>
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
-            <Card className="rounded-[40px] overflow-hidden border-0 bg-card group cursor-pointer hover:shadow-2xl transition-all shadow-lg">
-              <CardHeader className="p-8 pb-0">
-                <Badge variant="outline" className="w-fit mb-4">Capstone 2025</Badge>
-                <CardTitle className="text-3xl font-black leading-none">PermitEase</CardTitle>
-                <p className="text-muted-foreground text-sm mt-4">Cloud-Based Automated School Exam Permit System. A revolutionary way to handle digital permissions in academic environments.</p>
-              </CardHeader>
-              <CardContent className="p-8">
-                <div className="w-full aspect-video bg-muted rounded-2xl flex items-center justify-center group-hover:bg-primary/5 transition-colors">
-                  <Monitor className="w-12 h-12 text-muted-foreground group-hover:text-primary group-hover:scale-110 transition-transform" />
-                </div>
-              </CardContent>
-            </Card>
+            <div className="rounded-[40px] overflow-hidden border border-black/10 bg-white/70 backdrop-blur-md group cursor-pointer hover:shadow-2xl hover:border-black/20 hover:-translate-y-1 transition-all p-10">
+              <Badge variant="outline" className="w-fit mb-4 border-black/10 text-black/40 text-[10px] font-black uppercase tracking-widest">Capstone 2025</Badge>
+              <h3 className="text-4xl font-black leading-none text-black mb-4">PermitEase</h3>
+              <p className="text-black/50 text-base leading-relaxed mb-8">Cloud-Based Automated School Exam Permit System. A revolutionary way to handle digital permissions in academic environments.</p>
+              <div className="w-full aspect-video bg-black/[0.03] rounded-3xl flex items-center justify-center group-hover:bg-black/[0.06] transition-colors">
+                <Monitor className="w-16 h-16 text-black/10 group-hover:text-black/30 group-hover:scale-110 transition-all" />
+              </div>
+            </div>
 
-            <Card className="rounded-[40px] overflow-hidden border-0 bg-card group cursor-pointer hover:shadow-2xl transition-all shadow-lg">
-              <CardHeader className="p-8 pb-0">
-                <Badge variant="outline" className="w-fit mb-4">IT Administration</Badge>
-                <CardTitle className="text-3xl font-black leading-none">Asset Management System</CardTitle>
-                <p className="text-muted-foreground text-sm mt-4">Developing Next-Gen inventory control for ShoreAgents using Next.js 15 and Supabase, featuring real-time QR tracking.</p>
-              </CardHeader>
-              <CardContent className="p-8">
-                <div className="w-full aspect-video bg-muted rounded-2xl flex items-center justify-center group-hover:bg-blue-500/5 transition-colors">
-                  <div className="w-12 h-12 text-muted-foreground group-hover:text-blue-500 group-hover:rotate-12 transition-transform">
-                    <Monitor className="w-full h-full" />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section id="contact" className="py-24 px-6 bg-primary text-primary-foreground relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-white/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
-        <div className="max-w-4xl mx-auto text-center relative z-10 flex flex-col items-center">
-          <h2 className="text-3xl sm:text-4xl md:text-6xl font-black mb-8 leading-tight">LET&apos;S BUILD THE <br />NEXT GENERATION OF IT.</h2>
-          <div className="flex flex-wrap items-center justify-center gap-6">
-            <Button className="bg-white text-black hover:bg-white/90 font-bold h-14 px-6 rounded-2xl max-w-full">
-              <Mail className="mr-2 shrink-0" />
-              <span className="truncate text-sm sm:text-base">alexandersanalilalopez05@gmail.com</span>
-            </Button>
-            <div className="flex gap-4">
-              <Button variant="outline" className="border-white/20 hover:bg-white/10 rounded-2xl size-14">
-                <Linkedin />
-              </Button>
-              <Button variant="outline" className="border-white/20 hover:bg-white/10 rounded-2xl size-14">
-                <Github />
-              </Button>
+            <div className="rounded-[40px] overflow-hidden border border-black/10 bg-white/70 backdrop-blur-md group cursor-pointer hover:shadow-2xl hover:border-black/20 hover:-translate-y-1 transition-all p-10">
+              <Badge variant="outline" className="w-fit mb-4 border-black/10 text-black/40 text-[10px] font-black uppercase tracking-widest">IT Administration</Badge>
+              <h3 className="text-4xl font-black leading-none text-black mb-4">Asset Management System</h3>
+              <p className="text-black/50 text-base leading-relaxed mb-8">Next-Gen inventory control for ShoreAgents using Next.js 15 and Supabase, featuring real-time QR tracking.</p>
+              <div className="w-full aspect-video bg-black/[0.03] rounded-3xl flex items-center justify-center group-hover:bg-black/[0.06] transition-colors">
+                <Monitor className="w-16 h-16 text-black/10 group-hover:text-black/30 group-hover:scale-110 transition-all" />
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-12 px-6 border-t border-border/50 text-center">
-        <p className="text-sm text-muted-foreground font-medium">© 2025 ALEXANDER LOPEZ. CRAFTED WITH ANTIGRAVITY + NEXT.JS.</p>
+      {/* CTA Section — fitted to viewport with premium rounding */}
+      <section id="contact" className="min-h-[90vh] flex flex-col justify-center px-6 relative overflow-hidden bg-black text-white rounded-t-[60px] md:rounded-t-[120px] mt-10">
+        <div className="absolute inset-0 opacity-10 pointer-events-none"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='100' viewBox='0 0 40 100'%3E%3Cpath d='M20 0 Q 30 12.5, 20 25 Q 10 37.5, 20 50 Q 30 62.5, 20 75 Q 10 87.5, 20 100' fill='none' stroke='%23ffffff' stroke-width='1'/%3E%3C/svg%3E")`,
+            backgroundSize: "40px 100px",
+          }}
+        />
+        <div className="max-w-5xl mx-auto text-center relative z-10 flex flex-col items-center">
+          <h2 className="text-5xl md:text-8xl font-black mb-12 leading-tight tracking-tighter uppercase italic">
+            READY TO <br />
+            EVOLVE?
+          </h2>
+          <div className="flex flex-wrap items-center justify-center gap-6">
+            <a href="mailto:alexandersanalilalopez05@gmail.com"
+              className="h-16 px-10 bg-white text-black font-black text-sm rounded-2xl flex items-center gap-2 hover:scale-[1.05] transition-all shadow-2xl">
+              <Mail className="shrink-0" />
+              <span className="truncate">alexandersanalilalopez05@gmail.com</span>
+            </a>
+            <div className="flex gap-4">
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
+                className="size-16 border border-white/20 rounded-2xl flex items-center justify-center hover:bg-white/10 transition-colors">
+                <Linkedin />
+              </a>
+              <a href="https://github.com" target="_blank" rel="noopener noreferrer"
+                className="size-16 border border-white/20 rounded-2xl flex items-center justify-center hover:bg-white/10 transition-colors">
+                <Github />
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer — solid black to match CTA */}
+      <footer className="py-12 px-6 text-center bg-black">
+        <p className="text-[10px] text-white/30 font-black uppercase tracking-[0.4em]">© 2025 ALEXANDER LOPEZ. CRAFTED WITH NEXT.JS &amp; PASSION.</p>
       </footer>
     </main>
   );
