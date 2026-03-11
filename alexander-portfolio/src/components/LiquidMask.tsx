@@ -100,15 +100,16 @@ export default function LiquidMask({
 
     const width = containerRef.current.clientWidth;
     const height = containerRef.current.clientHeight;
-    
+
     const scene = new THREE.Scene();
     const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-    const renderer = new THREE.WebGLRenderer({ 
-      alpha: true, 
+    const renderer = new THREE.WebGLRenderer({
+      alpha: true,
       antialias: true,
       powerPreference: "high-performance"
     });
-    
+    renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
+
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.domElement.style.position = 'absolute';
@@ -125,10 +126,6 @@ export default function LiquidMask({
       const tex = loader.load(url);
       tex.minFilter = THREE.LinearFilter;
       tex.magFilter = THREE.LinearFilter;
-      // Use SRGB for correct colors in modern Three.js
-      if ('colorSpace' in tex) {
-        (tex as any).colorSpace = "srgb";
-      }
       return tex;
     };
 

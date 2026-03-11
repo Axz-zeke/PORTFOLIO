@@ -9,7 +9,7 @@ export default function CustomCursor() {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [clickCount, setClickCount] = useState(0);
 
-  const STAGES = [24, 48, 96, 192, 0]; 
+  const STAGES = [24, 48, 96, 192, 0];
   const currentSize = STAGES[clickCount % STAGES.length];
 
   useEffect(() => {
@@ -17,7 +17,7 @@ export default function CustomCursor() {
       setPosition({ x: e.clientX, y: e.clientY });
 
       const target = e.target as HTMLElement;
-      
+
       // Check for interactive elements
       setIsPointer(
         window.getComputedStyle(target).cursor === "pointer" ||
@@ -36,7 +36,7 @@ export default function CustomCursor() {
 
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("click", handleClick);
-    
+
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("click", handleClick);
@@ -64,7 +64,7 @@ export default function CustomCursor() {
           <div className="w-[90%] h-[90%] border border-black/20 rounded-full" />
         )}
       </motion.div>
-      
+
       <motion.div
         className="fixed top-0 left-0 w-1.5 h-1.5 bg-white rounded-full pointer-events-none z-[10000] transform-gpu"
         animate={{

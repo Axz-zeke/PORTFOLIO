@@ -4,31 +4,25 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform, useSpring, useMotionValue } from "framer-motion";
 import { Monitor, Download, ArrowRight } from "lucide-react";
 import LiquidMask from "./LiquidMask";
-import GlobalLiquidBackground from "./GlobalLiquidBackground";
+import { Spotlight } from "@/components/ui/spotlight-new";
 
-function BioParagraph({ i, bioScroll, children }: { i: number, bioScroll: any, children: React.ReactNode }) {
-  // Tighten ranges to minimize overlap and ensure a "one-out, one-in" feel
-  const opacity = useTransform(
-    bioScroll,
-    [
-      (i * 0.25) - 0.05, // Start fading in slightly before the "spot"
-      i * 0.25,          // Fully in
-      (i * 0.25) + 0.18, // Hold fully in
-      (i + 1) * 0.25     // Fully out before next one hits peak
-    ],
-    [0, 1, 1, 0]
-  );
+function BioParagraph({ i, bioScroll, isLast, children }: { i: number, bioScroll: any, isLast: boolean, children: React.ReactNode }) {
+  // If it's the last paragraph, we don't fade it out at the end of the scroll
+  const opacityRange = isLast
+    ? [(i * 0.25) - 0.05, i * 0.25, 1, 1]
+    : [(i * 0.25) - 0.05, i * 0.25, (i * 0.25) + 0.18, (i + 1) * 0.25];
 
-  const y = useTransform(
-    bioScroll,
-    [(i * 0.25) - 0.05, i * 0.25, (i + 1) * 0.25],
-    [15, 0, -15]
-  );
+  const yRange = isLast
+    ? [(i * 0.25) - 0.05, i * 0.25, 1]
+    : [(i * 0.25) - 0.05, i * 0.25, (i + 1) * 0.25];
+
+  const opacity = useTransform(bioScroll, opacityRange, [0, 1, 1, isLast ? 1 : 0]);
+  const y = useTransform(bioScroll, yRange, [15, 0, isLast ? 0 : -15]);
 
   return (
     <motion.p
       style={{ opacity, y }}
-      className="absolute inset-0 text-sm font-medium leading-relaxed text-white/60 uppercase tracking-wide"
+      className="absolute inset-0 text-lg md:text-xl font-medium leading-relaxed text-white/60 uppercase tracking-wide"
     >
       {children}
     </motion.p>
@@ -61,10 +55,10 @@ export default function AboutStorytelling() {
   );
 
   const bioParagraphs = [
-    <>I am <strong className="text-white">Alexander S. Lopez</strong>, a Cum Laude graduate in IT. My foundation is supported by <strong className="text-white">Cisco CyberOps</strong> and CCNA certifications, alongside proficiency in <strong className="text-white">Django, ReactJS, and AWS</strong>.</>,
-    <>My journey began at <strong className="text-white">ShoreAgents</strong> as an IT Specialist. I operated as the <strong className="text-white">sole administrator</strong>, taking full responsibility for managing and maintaining the entire IT infrastructure from the ground up.</>,
-    <>I provided support for <strong className="text-white">200+ employees</strong>, configured firewall security, and implemented an <strong className="text-white">NMS with dual ISP segregation</strong> to ensure 99.9% network reliability and technical autonomy.</>,
-    <>I led projects like migrating to <strong className="text-white">Google Workspace</strong> and supporting early-stage development. I excel at troubleshooting complex hardware while building <strong className="text-white">automated digital solutions</strong>.</>
+    <>I am <strong className="text-white">Alexander S. Lopez</strong>, graduate in Information Technology. My technical expertise is anchored by multiple <strong className="text-white">Cisco certifications</strong>, including <strong className="text-white">CyberOps Associate and CCNA</strong>, alongside a strong background in full-stack development.</>,
+    <>My professional career began at <strong className="text-white">ShoreAgents</strong>, where I was immediately challenged to study and master the company&apos;s entire IT infrastructure independently from my very first day. For the first half of my tenure, I served as the <strong className="text-white">sole IT Specialist</strong>, managing every aspect of the technology stack for over 200 employees. This included providing <strong className="text-white">Level 1–3 technical support</strong>, maintaining firewall security policies, and implementing a <strong className="text-white">Network Monitoring System (NMS)</strong> with dual ISP traffic segregation to ensure maximum reliability.</>,
+    <>I bridge the gap between robust infrastructure and modern software solutions. I developed a custom <strong className="text-white">Asset Management System using Next.js 15 and Supabase</strong>, featuring an automated QR-tracking ecosystem and a dynamic schema-driven architecture for real-time inventory control. Beyond software, I manage complex physical security and connectivity, including <strong className="text-white">Ubiquiti UniFi wireless controllers</strong>, Hikvision CCTV systems, and biometric access via ZKTeco and CrossChex.</>,
+    <>Whether I am leading large-scale cloud migrations from <strong className="text-white">Microsoft 365 to Google Workspace</strong> or building type-safe applications with <strong className="text-white">TypeScript</strong>, I focus on creating secure, efficient, and scalable environments that drive organizational success.</>
   ];
 
   return (
@@ -73,13 +67,7 @@ export default function AboutStorytelling() {
 
       <div className="sticky top-0 left-0 w-full h-screen overflow-hidden flex items-center justify-center bg-[#050505]">
         {/* Animated background restricted to this view */}
-        <GlobalLiquidBackground />
-
-        {/* Ambient Scroll Glow */}
-        <motion.div
-          style={{ opacity: glowOpacity, scale: glowScale }}
-          className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.05)_0%,transparent_70%)] pointer-events-none"
-        />
+        <Spotlight />
 
         <div className="relative z-10 px-6 max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-10 md:gap-20 w-full">
           {/* Left Column — Text */}
@@ -96,15 +84,15 @@ export default function AboutStorytelling() {
               </span>
             </h1>
 
-            <div className="relative h-40 sm:h-32 md:h-24 max-w-md mx-auto md:mx-0">
+            <div className="relative h-[400px] sm:h-[350px] md:h-[320px] max-w-3xl mx-auto md:mx-0 mt-6 md:mt-10">
               {bioParagraphs.map((text, i) => (
-                <BioParagraph key={i} i={i} bioScroll={bioScroll}>
+                <BioParagraph key={i} i={i} bioScroll={bioScroll} isLast={i === bioParagraphs.length - 1}>
                   {text}
                 </BioParagraph>
               ))}
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center gap-4 justify-center md:justify-start pt-4">
+            <div className="flex flex-col sm:flex-row items-center gap-4 justify-center md:justify-start mt-12 md:mt-20">
               <button className="h-14 px-8 rounded-2xl bg-white text-black text-sm font-black uppercase tracking-widest flex items-center gap-2 hover:scale-[1.03] active:scale-[0.97] transition-transform shadow-xl shadow-white/5 cursor-pointer">
                 Download Resume
                 <Download className="w-4 h-4" />
@@ -133,8 +121,7 @@ export default function AboutStorytelling() {
               tiltY.set(0);
             }}
           >
-            {/* Background Aura */}
-            <div className="absolute -inset-10 rounded-[60px] bg-white/[0.02] blur-[100px] pointer-events-none" />
+
 
             <motion.div
               className="relative w-full h-full rounded-[40px] overflow-hidden border border-white/[0.1] shadow-2xl bg-[#0a0a0a]"

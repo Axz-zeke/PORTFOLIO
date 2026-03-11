@@ -38,28 +38,28 @@ const BinaryBackground = () => {
 
       ctx.font = `500 ${fontSize}px Geist Mono, monospace`;
 
-          const centerX = canvas.width / 2;
-          const centerY = canvas.height / 2;
-          const maskRadius = Math.max(canvas.width, canvas.height) * 0.8;
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+      const maskRadius = Math.max(canvas.width, canvas.height) * 0.8;
 
-          for (let r = 0; r < rows; r++) {
-            const speed = 0.015;
-            const direction = r % 2 === 0 ? 1 : -1;
-            const rowOffset = (time * speed * direction) % (fontSize * 4);
+      for (let r = 0; r < rows; r++) {
+        const speed = 0.015;
+        const direction = r % 2 === 0 ? 1 : -1;
+        const rowOffset = (time * speed * direction) % (fontSize * 4);
 
-            for (let c = 0; c < columns; c++) {
-              const index = r * columns + c;
-              const bit = bits[index];
+        for (let c = 0; c < columns; c++) {
+          const index = r * columns + c;
+          const bit = bits[index];
 
-              const x = (c - 1) * fontSize + rowOffset;
-              const y = r * fontSize;
+          const x = (c - 1) * fontSize + rowOffset;
+          const y = r * fontSize;
 
-              const dx = x - centerX;
-              const dy = y - centerY;
-              const dist = Math.sqrt(dx * dx + dy * dy);
+          const dx = x - centerX;
+          const dy = y - centerY;
+          const dist = Math.sqrt(dx * dx + dy * dy);
 
-              // Apply exponential curve (x^2) for a much smoother and wider center "hollow"
-              const maskVal = Math.pow(Math.min(1, dist / maskRadius), 2);
+          // Apply exponential curve (x^2) for a much smoother and wider center "hollow"
+          const maskVal = Math.pow(Math.min(1, dist / maskRadius), 2);
 
           if (Math.abs(bit.opacity - bit.targetOpacity) < 0.01) {
             bit.targetOpacity = Math.random() * 0.4;

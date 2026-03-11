@@ -47,8 +47,8 @@ function Parquee({ baseVelocity = 100 }: ParqueeProps) {
 
   return (
     <div className="overflow-hidden whitespace-nowrap flex flex-nowrap cursor-grab active:cursor-grabbing">
-      <motion.div 
-        className="flex whitespace-nowrap flex-nowrap" 
+      <motion.div
+        className="flex whitespace-nowrap flex-nowrap"
         style={{ x }}
         drag="x"
         dragConstraints={{ left: 0, right: 0 }}
@@ -74,10 +74,7 @@ function Parquee({ baseVelocity = 100 }: ParqueeProps) {
 export default function InteractiveBridge() {
   return (
     <section className="w-full overflow-hidden py-16 md:py-24 bg-black/60 backdrop-blur-3xl relative shadow-[0_0_80px_rgba(0,0,0,0.1)] border-y border-white/[0.05]">
-      {/* Subtle Noise to maintain texture */}
-      <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden opacity-[0.05]">
-        <div className="absolute inset-[-200%] bg-noise animate-noise" />
-      </div>
+
 
       <div className="relative z-20">
         <Parquee baseVelocity={1} />

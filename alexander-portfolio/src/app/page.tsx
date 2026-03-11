@@ -148,8 +148,7 @@ export default function Home() {
                 </motion.div>
               </motion.div>
 
-              {/* Blending Gradient at bottom */}
-              <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-[#050505] to-transparent z-30 pointer-events-none" />
+
 
               {/* Binary Text Animation and Noise already present */}
             </section>
