@@ -54,7 +54,7 @@ const displayVertexShader = `
   varying vec2 vUv;
   void main() {
     vUv = uv;
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    gl_Position = vec4(position, 1.0);
   }
 `;
 
@@ -70,10 +70,13 @@ const displayFragmentShader = `
     vec4 hover = texture2D(tHover, vUv);
     float mask = texture2D(tMask, vUv).r;
     
-    // High-quality gooey border effect
-    float edge = 0.15;
-    float alpha = smoothstep(uThreshold - edge, uThreshold + edge, mask);
+    // Sharper transition to ensure 100% opacity
+    // We ensure the lower bound is slightly above 0 to prevent bleed-through
+    float edge = 0.1;
+    float alpha = smoothstep(uThreshold, uThreshold + edge, mask);
     
+    // Mix the colors. If base/hover have transparency, Three.js handles it
+    // against the clearColor (transparent) or the container background.
     gl_FragColor = mix(base, hover, alpha);
   }
 `;
@@ -90,48 +93,59 @@ export default function LiquidMask({
 }: LiquidMaskProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
-  const mouseRef = useRef(new THREE.Vector2(-1, -1)); // Start outside
+  const mouseRef = useRef(new THREE.Vector2(-1, -1));
 
   useEffect(() => {
     if (!containerRef.current) return;
 
     const width = containerRef.current.clientWidth;
     const height = containerRef.current.clientHeight;
-    const aspect = new THREE.Vector2(width / Math.min(width, height), height / Math.min(width, height));
-
+    
     const scene = new THREE.Scene();
     const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    const renderer = new THREE.WebGLRenderer({ 
+      alpha: true, 
+      antialias: true,
+      powerPreference: "high-performance"
+    });
+    
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.domElement.style.position = 'absolute';
+    renderer.domElement.style.top = '0';
+    renderer.domElement.style.left = '0';
+    renderer.domElement.style.width = '100%';
+    renderer.domElement.style.height = '100%';
     containerRef.current.appendChild(renderer.domElement);
     rendererRef.current = renderer;
 
+    // Load Textures with proper color space
     const loader = new THREE.TextureLoader();
-    const baseTex = loader.load(imageBase, (tex: THREE.Texture) => {
-      tex.minFilter = THREE.LinearMipmapLinearFilter;
+    const loadTexture = (url: string) => {
+      const tex = loader.load(url);
+      tex.minFilter = THREE.LinearFilter;
       tex.magFilter = THREE.LinearFilter;
-      tex.generateMipmaps = true;
-      const anisotropy = renderer.capabilities.getMaxAnisotropy();
-      tex.anisotropy = anisotropy;
-    });
-    const hoverTex = loader.load(imageHover, (tex: THREE.Texture) => {
-      tex.minFilter = THREE.LinearMipmapLinearFilter;
-      tex.magFilter = THREE.LinearFilter;
-      tex.generateMipmaps = true;
-      const anisotropy = renderer.capabilities.getMaxAnisotropy();
-      tex.anisotropy = anisotropy;
-    });
+      // Use SRGB for correct colors in modern Three.js
+      if ('colorSpace' in tex) {
+        (tex as any).colorSpace = "srgb";
+      }
+      return tex;
+    };
 
-    const simRes = 1024; // Doubled resolution for much smoother mask edges
+    const baseTex = loadTexture(imageBase);
+    const hoverTex = loadTexture(imageHover);
+
+    const simRes = 512; // Stable resolution
     let renderTargetA = new THREE.WebGLRenderTarget(simRes, simRes, {
-      type: THREE.HalfFloatType,
       format: THREE.RGBAFormat,
+      type: THREE.UnsignedByteType,
     });
     let renderTargetB = new THREE.WebGLRenderTarget(simRes, simRes, {
-      type: THREE.HalfFloatType,
       format: THREE.RGBAFormat,
+      type: THREE.UnsignedByteType,
     });
+
+    const aspect = new THREE.Vector2(width / Math.min(width, height), height / Math.min(width, height));
 
     const simMaterial = new THREE.ShaderMaterial({
       uniforms: {
@@ -159,6 +173,7 @@ export default function LiquidMask({
       },
       vertexShader: displayVertexShader,
       fragmentShader: displayFragmentShader,
+      transparent: true,
     });
 
     const displayMesh = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), displayMaterial);
@@ -166,12 +181,7 @@ export default function LiquidMask({
 
     const handleMouseMove = (e: MouseEvent) => {
       if (!containerRef.current) return;
-
       const rect = containerRef.current.getBoundingClientRect();
-
-      // PRECISE MAPPING: Map global viewport cursor to local component UV space
-      // Even if the mouse is outside the component, we want the "splat" to track correctly
-      // when it eventually passes over or near the component bounds.
       mouseRef.current.x = (e.clientX - rect.left) / rect.width;
       mouseRef.current.y = 1.0 - (e.clientY - rect.top) / rect.height;
     };
@@ -221,7 +231,8 @@ export default function LiquidMask({
       displayMaterial.dispose();
       containerRef.current?.removeChild(renderer.domElement);
     };
-  }, [imageBase, imageHover, splatRadius, splatStrength, dissipation, threshold]);
+  }, [imageBase, imageHover]);
+  // Removed other dependencies to avoid unnecessary re-initialization
 
-  return <div ref={containerRef} className={`w-full h-full ${className}`} style={style} />;
+  return <div ref={containerRef} className={`relative w-full h-full ${className}`} style={style} />;
 }
