@@ -6,10 +6,10 @@ import LiquidMask from "@/components/LiquidMask";
 import GlobalLiquidBackground from "@/components/GlobalLiquidBackground";
 import BinaryBackground from "@/components/BinaryBackground";
 import InteractiveBridge from "@/components/InteractiveBridge";
-import BentoGrid from "@/components/BentoGrid";
 import TerminalLoader from "@/components/TerminalLoader";
 import CustomCursor from "@/components/CustomCursor";
 import AboutStorytelling from "@/components/AboutStorytelling";
+import TechStack from "@/components/TechStack";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -71,7 +71,6 @@ export default function Home() {
               {/* Desktop Nav Links */}
               <div className="hidden md:flex items-center gap-6 bg-black/40 border border-white/10 px-6 py-2 rounded-2xl backdrop-blur-xl shadow-sm">
                 <a href="#about" className="text-xs font-black uppercase tracking-widest hover:text-white transition-colors text-white/60">About</a>
-                <a href="#experience" className="text-xs font-black uppercase tracking-widest hover:text-white transition-colors text-white/60">Experience</a>
                 <a href="#projects" className="text-xs font-black uppercase tracking-widest hover:text-white transition-colors text-white/60">Projects</a>
                 <a href="#contact" className="text-xs font-black uppercase tracking-widest hover:text-white transition-colors text-white/60">Contact</a>
               </div>
@@ -100,7 +99,7 @@ export default function Home() {
             {/* Mobile Menu */}
             {menuOpen && (
               <div className="fixed top-[72px] left-0 w-full z-40 bg-[#050505]/95 backdrop-blur-xl border-b border-white/10 flex flex-col items-center gap-6 py-8 md:hidden">
-                {["#about", "#experience", "#projects", "#contact"].map((href) => (
+                {["#about", "#projects", "#contact"].map((href) => (
                   <a key={href} href={href} onClick={() => setMenuOpen(false)}
                     className="text-sm font-black uppercase tracking-widest hover:text-white transition-colors text-white/60">
                     {href.replace("#", "")}
@@ -159,24 +158,10 @@ export default function Home() {
             {/* HERO/ABOUT SECTION — Scroll storytelling */}
             <AboutStorytelling />
 
-            {/* Marquee divider — cohesive dark theme */}
-            <div className="w-full overflow-hidden pointer-events-none select-none py-10 border-y border-white/5 bg-black/40">
-              <p className="text-[10vw] font-black tracking-tighter text-white/[0.03] whitespace-nowrap">
-                IT SPECIALIST &nbsp;&nbsp; FULL-STACK DEV &nbsp;&nbsp; NETWORK ADMIN &nbsp;&nbsp;
-                IT SPECIALIST &nbsp;&nbsp; FULL-STACK DEV &nbsp;&nbsp; NETWORK ADMIN
-              </p>
-            </div>
+            {/* Tech Stack Section — 3D Icon Cloud */}
+            <TechStack />
 
-            {/* Experience / Bento Grid — fitted to viewport */}
-            <section id="experience" className="min-h-screen flex flex-col justify-center py-24 bg-transparent">
-              <div className="max-w-7xl mx-auto px-6 mb-16 text-center">
-                <h2 className="text-4xl md:text-6xl font-black tracking-tight mb-4 text-white">
-                  ENGINEERING <span className="text-white/10">&</span> DESIGN
-                </h2>
-                <p className="text-white/30 uppercase tracking-[0.2em] font-black text-[10px]">Professional Experience &amp; Educational Foundation</p>
-              </div>
-              <BentoGrid />
-            </section>
+
 
             {/* Projects Hook Section — fitted to viewport and light theme */}
             <section id="projects" className="min-h-screen flex flex-col justify-center py-32 px-6 bg-transparent">

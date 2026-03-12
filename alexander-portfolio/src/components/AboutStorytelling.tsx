@@ -72,17 +72,29 @@ export default function AboutStorytelling() {
         <div className="relative z-10 px-6 max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-10 md:gap-20 w-full">
           {/* Left Column — Text */}
           <div className="flex-1 space-y-8 text-center md:text-left">
-            <div className="inline-flex items-center gap-2 border border-white/10 bg-white/5 backdrop-blur-md px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest text-white/40">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="inline-flex items-center gap-2 border border-white/10 bg-white/5 backdrop-blur-md px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest text-white/40"
+            >
               <Monitor className="w-3 h-3" />
               IT Specialist &amp; Full-Stack Developer
-            </div>
+            </motion.div>
 
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] text-white uppercase">
+            <motion.h1
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.1 }}
+              viewport={{ once: true }}
+              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] text-white uppercase"
+            >
               About<br />
               <span style={{ WebkitTextStroke: "2px #fff", color: "transparent" }}>
                 Me.
               </span>
-            </h1>
+            </motion.h1>
 
             <div className="relative h-[400px] sm:h-[350px] md:h-[320px] max-w-3xl mx-auto md:mx-0 mt-6 md:mt-10">
               {bioParagraphs.map((text, i) => (
@@ -92,7 +104,13 @@ export default function AboutStorytelling() {
               ))}
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center gap-4 justify-center md:justify-start mt-12 md:mt-20">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              viewport={{ once: true }}
+              className="flex flex-col sm:flex-row items-center gap-4 justify-center md:justify-start mt-12 md:mt-20"
+            >
               <button className="h-14 px-8 rounded-2xl bg-white text-black text-sm font-black uppercase tracking-widest flex items-center gap-2 hover:scale-[1.03] active:scale-[0.97] transition-transform shadow-xl shadow-white/5 cursor-pointer">
                 Download Resume
                 <Download className="w-4 h-4" />
@@ -101,11 +119,16 @@ export default function AboutStorytelling() {
                 View Projects
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
-            </div>
+            </motion.div>
           </div>
 
           {/* Right Column — 3D Tilt Liquid Portrait */}
-          <div className="flex-shrink-0 w-full max-w-[260px] sm:max-w-[320px] md:max-w-[400px] aspect-[3/4] relative group"
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, x: 50 }}
+            whileInView={{ opacity: 1, scale: 1, x: 0 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            viewport={{ once: true }}
+            className="flex-shrink-0 w-full max-w-[260px] sm:max-w-[320px] md:max-w-[400px] aspect-[3/4] relative group"
             data-no-negative="true"
             onMouseMove={(e) => {
               const rect = e.currentTarget.getBoundingClientRect();
@@ -156,7 +179,7 @@ export default function AboutStorytelling() {
                 </div>
               </div>
             </motion.div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

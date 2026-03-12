@@ -62,7 +62,7 @@ function Parquee({ baseVelocity = 100 }: ParqueeProps) {
         }}
       >
         {[...Array(6)].map((_, i) => (
-          <span key={i} className="text-[12vw] font-black tracking-tighter text-[#f1f5f9]/80 uppercase leading-none select-none px-12 block">
+          <span key={i} className="text-[12vw] font-black tracking-tighter text-[#1a1a1b] uppercase leading-none select-none px-12 block">
             READY TO KNOW ME?
           </span>
         ))}
@@ -73,7 +73,7 @@ function Parquee({ baseVelocity = 100 }: ParqueeProps) {
 
 export default function InteractiveBridge() {
   return (
-    <section className="w-full overflow-hidden py-16 md:py-24 bg-black/60 backdrop-blur-3xl relative shadow-[0_0_80px_rgba(0,0,0,0.1)] border-y border-white/[0.05]">
+    <section className="w-full overflow-hidden py-16 md:py-24 bg-[#f8f9fb] relative border-y border-black/5">
 
 
       <div className="relative z-20">
