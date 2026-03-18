@@ -22,8 +22,229 @@ import {
   Rocket,
   Menu,
   X,
-  ChevronDown
+  ChevronDown,
+  LayoutGrid
 } from "lucide-react";
+
+function ProjectSection() {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  // Full detailed text content — and prepending short description
+  const fullDescription = `ShoreAgents Assets Management is a modern, full-stack enterprise solution designed to simplify the lifecycle management of corporate assets. From acquisition to maintenance, the platform provides a centralized hub for tracking personnel and equipment.
+
+Built with a focus on user experience and data integrity, the application leverages Next.js 15+, TypeScript, and Tailwind CSS for a premium, responsive interface. The backend is powered by Supabase, ensuring secure authentication, real-time database synchronization, and scalable file storage.
+
+Core Features:
+Integrated QR Ecosystem: One-click QR code generation and multi-modal scanning (Camera-based & File upload) for instant asset lookup and status updates.
+Dynamic Asset Tracking: Comprehensive data management with advanced filtering, sorting, and pagination, supporting thousands of unique asset records.
+Maintenance & Lifecycle Logs: Dedicated modules for logging repairs, tracking maintenance history, and managing dynamic forms.
+Customizable "Pulse" Dashboard: A drag-and-drop enabled interface (via dnd-kit) allowing users to prioritize and organize asset categories.
+Enterprise Data Tools: Built-in CSV import/export functionality for seamless manual data migration and reporting.
+Full-Stack Security: Protected authentication flows and role-based data access integrated with Supabase Auth.
+
+Tech Stack:
+Frontend: Next.js 15+, React 19, TypeScript, Tailwind CSS, Radix UI (Shadcn), TanStack Query.
+Backend: Supabase (Postgres, Auth, Edge Functions, Storage).
+Utilities: Lucide Icons, Date-fns, Recharts, HTML5-QRCode.`;
+
+  const sections = fullDescription.split(/(?=Core Features:|Tech Stack:)/);
+
+  return (
+    <section id="projects" className="min-h-screen flex flex-col justify-center py-32 px-6">
+      <div className="max-w-[1400px] mx-auto w-full">
+        <motion.h2 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-5xl md:text-8xl font-black text-center mb-16 text-white tracking-tighter"
+        >
+          PROJECTS<span className="text-white/10">.</span>
+        </motion.h2>
+
+        <motion.div 
+          layout
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="relative"
+        >
+          {/* Main Layout Container — Dynamically changes layout on expand */}
+          <motion.div 
+            layout 
+            className={`flex flex-col ${isExpanded ? 'items-center gap-16' : 'lg:flex-row lg:items-center gap-12 lg:gap-20'}`}
+          >
+            {/* Left/Top: Video Wrapper — Centers and grows on expand */}
+            <motion.div 
+              layout
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className={`relative shadow-[0_0_120px_rgba(255,255,255,0.03)] border border-white/5 bg-white/[0.02] rounded-[40px] overflow-hidden 
+                ${isExpanded ? 'w-full max-w-5xl aspect-video' : 'w-full lg:w-[62%] aspect-video'}
+              `}
+            >
+              <video 
+                src="/preview.mp4" 
+                autoPlay 
+                loop 
+                muted 
+                playsInline 
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
+            </motion.div>
+
+            {/* Right/Bottom: Content Summary — Shifts below on expand */}
+            <motion.div 
+              layout
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className={`flex flex-col ${isExpanded ? 'w-full max-w-[1400px] text-center items-center' : 'w-full lg:w-[38%]'}`}
+            >
+              <motion.div layout transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }} className="mb-0 flex flex-col items-inherit">
+                <motion.div layout>
+                  <Badge 
+                    variant="outline" 
+                    className={`w-fit border-white/10 text-white/40 text-[10px] font-black uppercase tracking-[0.2em] px-3 py-1 rounded-lg mb-6 bg-white/5 ${isExpanded ? 'mx-auto' : ''}`}
+                  >
+                    Enterprise Solution
+                  </Badge>
+                </motion.div>
+                
+                <motion.h3 
+                  layout
+                  transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                  className={`font-black text-white leading-[1.1] tracking-tighter transition-all duration-500 whitespace-nowrap
+                  ${isExpanded ? 'text-4xl md:text-6xl xl:text-8xl mb-6' : 'text-4xl md:text-5xl xl:text-7xl mb-8'}
+                `}>
+                  {isExpanded ? (
+                    "ShoreAgents Assets Management"
+                  ) : (
+                    <>ShoreAgents <br /> Assets Management</>
+                  )}
+                </motion.h3>
+                
+                <AnimatePresence mode="wait">
+                  {!isExpanded && (
+                    <motion.div
+                      key="summary-content"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.4 }}
+                    >
+                      <p className="text-white/60 text-base md:text-xl leading-relaxed mb-8 font-medium">
+                        ShoreAgents Assets Management is a modern, full-stack enterprise solution designed to simplify the lifecycle management of corporate assets. From acquisition to maintenance, the platform provides a centralized hub for tracking personnel and equipment.
+                      </p>
+
+                      <div className="flex items-center gap-6">
+                        <button
+                          onClick={() => setIsExpanded(true)}
+                          className="h-12 px-8 rounded-full border border-white/10 bg-white/5 text-[10px] font-black uppercase tracking-[0.2em] text-white/40 hover:text-white hover:border-white/20 transition-all flex items-center gap-3 bg-white/5 hover:scale-105 active:scale-95"
+                        >
+                          <LayoutGrid size={14} className="text-white/20 transition-all" />
+                          System Details
+                        </button>
+
+                        <a 
+                          href="https://shore-agents-assets-management.vercel.app/" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="h-12 px-8 rounded-full bg-white text-black text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-2 hover:scale-105 transition-all shadow-xl active:scale-95"
+                        >
+                          View Site
+                          <ArrowRight size={14} />
+                        </a>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            </motion.div>
+          </motion.div>
+
+          {/* Bottom Section — 2-Column Open Layout Expansion */}
+          <AnimatePresence>
+            {isExpanded && (
+              <motion.div
+                layout
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 30 }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                className="mt-6 pt-16 border-t border-white/5 flex justify-center"
+              >
+                <div className="max-w-5xl w-full space-y-20 pb-12">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-20 gap-y-16">
+                    {sections.map((section, idx) => {
+                      const lines = section.trim().split('\n');
+                      const heading = lines[0];
+                      const body = lines.slice(1);
+                      const isFeature = heading === "Core Features:" || heading === "Tech Stack:";
+
+                      return (
+                        <motion.div 
+                          key={idx} 
+                          initial={{ opacity: 0, y: 40 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.2 + (idx * 0.1), duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                          className={`flex flex-col gap-10 ${!isFeature ? 'lg:col-span-2' : 'lg:col-span-1'}`}
+                        >
+                          {isFeature ? (
+                            <div className="flex flex-col gap-10">
+                              <h4 className="text-2xl md:text-3xl font-black text-white/90 tracking-tight border-b border-white/10 pb-6">{heading.replace(':', '')}</h4>
+                              <div className="grid grid-cols-1 gap-8">
+                                {body.filter(l => l.trim()).map((line, lIdx) => (
+                                  <div key={lIdx} className="flex gap-6 items-start group/line">
+                                    <div className="size-1.5 rounded-full bg-white/20 mt-2.5 transition-colors group-hover/line:bg-white/60 shrink-0" />
+                                    <p className="text-white/60 text-base md:text-lg leading-relaxed font-medium">
+                                      {line.trim().replace(/^•\s*/, '')}
+                                    </p>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          ) : (
+                            <div className="space-y-8 max-w-4xl">
+                              {lines.filter(l => l.trim()).map((line, lIdx) => (
+                                <p key={lIdx} className="text-white/60 text-lg md:text-xl leading-relaxed first-of-type:font-medium">
+                                  {line.trim()}
+                                </p>
+                              ))}
+                            </div>
+                          )}
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+
+                  {/* Relocated Buttons in Expanded View — Centralized at end */}
+                  <div className="flex flex-wrap items-center justify-center gap-6 pt-12">
+                    <button
+                      onClick={() => setIsExpanded(!isExpanded)}
+                      className="h-14 px-10 rounded-full border border-white/10 bg-white/5 text-[10px] font-black uppercase tracking-[0.2em] text-white/40 hover:text-white hover:border-white/20 transition-all flex items-center gap-3 backdrop-blur-md hover:scale-105 active:scale-95"
+                    >
+                      <LayoutGrid size={16} className="text-white" />
+                      Back to Overview
+                    </button>
+
+                    <a 
+                      href="https://shore-agents-assets-management.vercel.app/" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="h-14 px-10 rounded-full bg-white text-black text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-2 hover:scale-105 transition-all shadow-2xl active:scale-95"
+                    >
+                      Explore Project
+                      <ArrowRight size={16} />
+                    </a>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -163,35 +384,8 @@ export default function Home() {
 
 
 
-            {/* Projects Hook Section — fitted to viewport and light theme */}
-            <section id="projects" className="min-h-screen flex flex-col justify-center py-32 px-6 bg-transparent">
-              <div className="max-w-7xl mx-auto flex flex-col items-center">
-                <h2 className="text-3xl sm:text-5xl md:text-8xl font-black text-center mb-16 italic text-white">
-                  CRAFTING MODERN <br />
-                  <span style={{ WebkitTextStroke: "2px rgba(255,255,255,0.1)", color: "transparent" }}>SOLUTIONS.</span>
-                </h2>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
-                  <div className="rounded-[40px] overflow-hidden border border-white/10 bg-white/5 backdrop-blur-md group cursor-pointer hover:shadow-2xl hover:border-white/20 hover:-translate-y-1 transition-all p-10">
-                    <Badge variant="outline" className="w-fit mb-4 border-white/10 text-white/30 text-[10px] font-black uppercase tracking-widest">Capstone 2025</Badge>
-                    <h3 className="text-4xl font-black leading-none text-white mb-4">PermitEase</h3>
-                    <p className="text-white/40 text-base leading-relaxed mb-8">Cloud-Based Automated School Exam Permit System. A revolutionary way to handle digital permissions in academic environments.</p>
-                    <div className="w-full aspect-video bg-white/[0.03] rounded-3xl flex items-center justify-center group-hover:bg-white/[0.06] transition-colors">
-                      <Monitor className="w-16 h-16 text-white/10 group-hover:text-white/30 group-hover:scale-110 transition-all" />
-                    </div>
-                  </div>
-
-                  <div className="rounded-[40px] overflow-hidden border border-white/10 bg-white/5 backdrop-blur-md group cursor-pointer hover:shadow-2xl hover:border-white/20 hover:-translate-y-1 transition-all p-10">
-                    <Badge variant="outline" className="w-fit mb-4 border-white/10 text-white/30 text-[10px] font-black uppercase tracking-widest">IT Administration</Badge>
-                    <h3 className="text-4xl font-black leading-none text-white mb-4">Asset Management System</h3>
-                    <p className="text-white/40 text-base leading-relaxed mb-8">Next-Gen inventory control for ShoreAgents using Next.js 15 and Supabase, featuring real-time QR tracking.</p>
-                    <div className="w-full aspect-video bg-white/[0.03] rounded-3xl flex items-center justify-center group-hover:bg-white/[0.06] transition-colors">
-                      <Monitor className="w-16 h-16 text-white/10 group-hover:text-white/30 group-hover:scale-110 transition-all" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
+            {/* Projects Section — Spotlight Layout */}
+            <ProjectSection />
 
             {/* CTA Section — fitted to viewport with premium rounding */}
             <section id="contact" className="min-h-[90vh] flex flex-col justify-center px-6 relative overflow-hidden bg-black text-white rounded-t-[60px] md:rounded-t-[120px] mt-10">
