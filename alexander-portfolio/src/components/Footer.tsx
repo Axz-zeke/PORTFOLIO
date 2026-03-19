@@ -6,13 +6,14 @@ export default function Footer() {
   return (
     <footer className="w-full bg-[#050505] overflow-hidden pb-0">
       <div className="relative w-full select-none pointer-events-none">
-        <h2 className="text-[16.8vw] font-black leading-[0.7] tracking-tighter text-[#888] text-center whitespace-nowrap px-0"
+        <h2 className="text-[34vw] sm:text-[16.8vw] font-black leading-[0.7] tracking-tightest sm:tracking-tighter text-[#888] text-center whitespace-nowrap px-0"
           style={{
             maskImage: 'linear-gradient(to top, transparent 0%, rgba(0,0,0,0.5) 15%, black 40%)',
-            WebkitMaskImage: 'linear-gradient(to top, transparent 0%, rgba(0,0,0,0.5) 15%, black 40%)'
+            WebkitMaskImage: 'linear-gradient(to top, transparent 0% , rgba(0,0,0,0.5) 15%, black 40%)'
           }}
         >
-          ALEXANDER
+          <span className="sm:hidden">ALEX</span>
+          <span className="hidden sm:inline">ALEXANDER</span>
         </h2>
 
         {/* Volumetric shadow fall-off (uses box-shadow engines for total smoothness) */}

@@ -112,9 +112,9 @@ export function IconCloud({ icons, images }: IconCloudProps) {
       const z = Math.sin(phi) * r
 
       newIcons.push({
-        x: x * 200,
-        y: y * 200,
-        z: z * 200,
+        x: x * 280,
+        y: y * 280,
+        z: z * 280,
         scale: 1,
         opacity: 1,
         id: i,
@@ -147,7 +147,7 @@ export function IconCloud({ icons, images }: IconCloudProps) {
       const screenX = canvasRef.current!.width / 2 + rotatedX
       const screenY = canvasRef.current!.height / 2 + rotatedY
 
-      const scale = (rotatedZ + 200) / 300
+      const scale = (rotatedZ + 280) / 400
       const radius = 20 * scale
       const dx = x - screenX
       const dy = y - screenY
@@ -259,8 +259,8 @@ export function IconCloud({ icons, images }: IconCloudProps) {
           const rotatedZ = icon.x * sinY + icon.z * cosY
           const rotatedY = icon.y * cosX + rotatedZ * sinX
 
-          const scale = (rotatedZ + 200) / 300
-          const opacity = Math.max(0.2, Math.min(1, (rotatedZ + 150) / 200))
+          const scale = (rotatedZ + 280) / 400
+          const opacity = Math.max(0.2, Math.min(1, (rotatedZ + 200) / 280))
 
           ctx.save()
           ctx.translate(
@@ -315,7 +315,7 @@ export function IconCloud({ icons, images }: IconCloudProps) {
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
-      className="rounded-lg"
+      className="max-w-full h-auto aspect-square rounded-lg"
       aria-label="Interactive 3D Icon Cloud"
       role="img"
     />

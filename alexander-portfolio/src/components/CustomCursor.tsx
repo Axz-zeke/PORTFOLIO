@@ -45,6 +45,7 @@ export default function CustomCursor() {
 
   return (
     <>
+    <div className="hidden lg:block">
       <motion.div
         className="fixed top-0 left-0 rounded-full pointer-events-none z-[10000] transform-gpu flex items-center justify-center"
         animate={{
@@ -74,6 +75,7 @@ export default function CustomCursor() {
         }}
         transition={{ type: "tween", ease: "linear", duration: 0 }}
       />
+    </div>
     </>
   );
 }

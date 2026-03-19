@@ -1,8 +1,8 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useScroll, useTransform, useSpring, useMotionValue } from "framer-motion";
-import { Monitor, Download, ArrowRight } from "lucide-react";
+import { useState, useRef } from "react";
+import { motion, useScroll, useTransform, useSpring, useMotionValue, AnimatePresence } from "framer-motion";
+import { Monitor, Download, ArrowRight, ChevronDown, X } from "lucide-react";
 import LiquidMask from "./LiquidMask";
 import { Spotlight } from "@/components/ui/spotlight-new";
 
@@ -22,7 +22,7 @@ function BioParagraph({ i, bioScroll, isLast, children }: { i: number, bioScroll
   return (
     <motion.p
       style={{ opacity, y }}
-      className="absolute inset-0 text-lg md:text-xl font-medium leading-relaxed text-white/60 uppercase tracking-wide"
+      className="absolute inset-0 text-base sm:text-lg md:text-xl font-medium leading-relaxed text-white/60 uppercase tracking-wide"
     >
       {children}
     </motion.p>
@@ -30,6 +30,7 @@ function BioParagraph({ i, bioScroll, isLast, children }: { i: number, bioScroll
 }
 
 export default function AboutStorytelling() {
+  const [showFullBio, setShowFullBio] = useState(false);
   const bioRef = useRef(null);
   const { scrollYProgress: bioScroll } = useScroll({
     target: bioRef,
@@ -62,78 +63,33 @@ export default function AboutStorytelling() {
   ];
 
   return (
-    <section id="about" ref={bioRef} className="relative w-full h-[450vh]">
-      {/* Scroll Indicator Dot-line or track could go here */}
+    <section id="about" ref={bioRef} className="relative w-full h-auto min-h-screen lg:h-[450vh] bg-[#050505]">
+      <div className="relative lg:sticky top-0 left-0 w-full min-h-screen lg:h-screen overflow-hidden flex items-center justify-center bg-[#050505] pt-32 pb-12 lg:py-0">
+        <div className="hidden lg:block">
+          <Spotlight />
+        </div>
 
-      <div className="sticky top-0 left-0 w-full h-screen overflow-hidden flex items-center justify-center bg-[#050505]">
-        {/* Animated background restricted to this view */}
-        <Spotlight />
-
-        <div className="relative z-10 px-6 max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-10 md:gap-20 w-full">
-          {/* Left Column — Text */}
-          <div className="flex-1 space-y-8 text-center md:text-left">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-              className="inline-flex items-center gap-2 border border-white/10 bg-white/5 backdrop-blur-md px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest text-white/40"
-            >
-              <Monitor className="w-3 h-3" />
-              IT Specialist &amp; Full-Stack Developer
-            </motion.div>
-
-            <motion.h1
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.1 }}
-              viewport={{ once: true }}
-              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] text-white uppercase"
-            >
-              About<br />
-              <span style={{ WebkitTextStroke: "2px #fff", color: "transparent" }}>
-                Me.
-              </span>
-            </motion.h1>
-
-            <div className="relative h-[400px] sm:h-[350px] md:h-[320px] max-w-3xl mx-auto md:mx-0 mt-6 md:mt-10">
-              {bioParagraphs.map((text, i) => (
-                <BioParagraph key={i} i={i} bioScroll={bioScroll} isLast={i === bioParagraphs.length - 1}>
-                  {text}
-                </BioParagraph>
-              ))}
-            </div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              viewport={{ once: true }}
-              className="flex flex-col sm:flex-row items-center gap-4 justify-center md:justify-start mt-12 md:mt-20"
-            >
-              <a href="/Alexander_Lopez_Resume.pdf" download="Alexander_Lopez_Resume.pdf">
-                <button className="h-14 px-8 rounded-2xl bg-white text-black text-sm font-black uppercase tracking-widest flex items-center gap-2 hover:scale-[1.03] active:scale-[0.97] transition-transform shadow-xl shadow-white/5 cursor-pointer">
-                  Download Resume
-                  <Download className="w-4 h-4" />
-                </button>
-              </a>
-              <button 
-                className="h-14 px-8 rounded-2xl border border-white/20 bg-white/5 backdrop-blur-md text-sm font-black uppercase tracking-widest text-white flex items-center gap-2 hover:bg-white hover:text-black transition-all group cursor-pointer" 
-                onClick={() => window.location.href = '#projects'}
-              >
-                View Projects
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </button>
-            </motion.div>
-          </div>
-
-          {/* Right Column — 3D Tilt Liquid Portrait */}
+        <div className="relative z-10 px-6 max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between lg:justify-center gap-6 lg:gap-20 w-full h-full lg:h-auto overflow-y-auto lg:overflow-visible">
+          
+          {/* Badge TOP on mobile */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, x: 50 }}
-            whileInView={{ opacity: 1, scale: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="lg:hidden inline-flex items-center gap-2 border border-white/10 bg-white/5 backdrop-blur-md px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest text-white/40"
+          >
+            <Monitor className="w-2.5 h-2.5" />
+            IT Specialist &amp; Full-Stack Developer
+          </motion.div>
+          
+          {/* Portrait SECOND on mobile */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, ease: "easeOut" }}
             viewport={{ once: true }}
-            className="flex-shrink-0 w-full max-w-[260px] sm:max-w-[320px] md:max-w-[400px] aspect-[3/4] relative group"
+            className="flex-shrink-0 w-full max-w-[320px] lg:max-w-[400px] aspect-[3/4] relative group"
             data-no-negative="true"
             onMouseMove={(e) => {
               const rect = e.currentTarget.getBoundingClientRect();
@@ -144,21 +100,11 @@ export default function AboutStorytelling() {
               glowX.set(x * 100);
               glowY.set(y * 100);
             }}
-            onMouseLeave={() => {
-              tiltX.set(0);
-              tiltY.set(0);
-            }}
+            onMouseLeave={() => { tiltX.set(0); tiltY.set(0); }}
           >
-
-
             <motion.div
               className="relative w-full h-full rounded-[40px] overflow-hidden border border-white/[0.1] shadow-2xl bg-[#0a0a0a]"
-              style={{
-                rotateX: springTiltX,
-                rotateY: springTiltY,
-                transformStyle: "preserve-3d",
-                perspective: "1200px"
-              }}
+              style={{ rotateX: springTiltX, rotateY: springTiltY, transformStyle: "preserve-3d", perspective: "1200px" }}
             >
               <div className="absolute inset-0 z-0 scale-[1.01]">
                 <LiquidMask
@@ -170,21 +116,98 @@ export default function AboutStorytelling() {
                   dissipation={0.8}
                 />
               </div>
-
-              {/* Dynamic Sheen */}
-              <motion.div
-                className="absolute inset-0 z-10 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700"
-                style={{ background: reflexBackground }}
-              />
-
-              <div className="absolute top-6 right-6 z-20" style={{ transform: "translateZ(60px)" }}>
-                <div className="bg-black/80 backdrop-blur-xl px-5 py-2.5 rounded-2xl flex items-center gap-2.5 border border-white/10 shadow-2xl">
-                  <div className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
-                  <span className="text-[11px] font-black uppercase tracking-widest text-white/90">Available for Hire</span>
+              <motion.div className="absolute inset-0 z-10 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700" style={{ background: reflexBackground }} />
+              <div className="absolute top-4 md:top-6 right-4 md:right-6 z-20" style={{ transform: "translateZ(60px)" }}>
+                <div className="bg-black/80 backdrop-blur-xl px-3 md:px-5 py-1.5 md:py-2.5 rounded-xl md:rounded-2xl flex items-center gap-2 border border-white/10 shadow-2xl">
+                  <div className="w-2 h-2 md:w-2.5 md:h-2.5 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
+                  <span className="text-[9px] md:text-[11px] font-black uppercase tracking-widest text-white/90">Available for Hire</span>
                 </div>
               </div>
             </motion.div>
           </motion.div>
+
+          {/* Text Content */}
+          <div className="flex-1 space-y-3 lg:space-y-8 text-center lg:text-left">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="hidden lg:inline-flex items-center gap-2 border border-white/10 bg-white/5 backdrop-blur-md px-3 lg:px-4 py-1 lg:py-1.5 rounded-full text-[9px] lg:text-[10px] font-black uppercase tracking-widest text-white/40"
+            >
+              <Monitor className="w-2.5 h-2.5 lg:w-3 lg:h-3" />
+              IT Specialist &amp; Full-Stack Developer
+            </motion.div>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.1 }}
+              viewport={{ once: true }}
+              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] text-white uppercase text-center lg:text-left pt-4 lg:pt-0"
+            >
+              About Me<span style={{ WebkitTextStroke: "1px #fff", color: "transparent" }}>.</span>
+            </motion.h1>
+
+            {/* Mobile-Only Preview Paragraph (Up to 1024px) */}
+            <div className="lg:hidden space-y-6 mt-6">
+              <p className="text-base font-medium leading-relaxed text-white/60 uppercase tracking-wide text-center">
+                {bioParagraphs[0]}
+              </p>
+              <button 
+                onClick={() => setShowFullBio(true)}
+                className="mx-auto flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.3em] text-white/30 hover:text-white transition-colors group pb-4"
+              >
+                Read More
+                <ChevronDown className="w-3 h-3 group-hover:translate-y-1 transition-transform" />
+              </button>
+            </div>
+
+            {/* Desktop Only Scroll Storytelling (Above 1024px) */}
+            <div className="hidden lg:block relative h-[320px] max-w-3xl mx-auto lg:mx-0">
+              {bioParagraphs.map((text, i) => (
+                <BioParagraph key={i} i={i} bioScroll={bioScroll} isLast={i === bioParagraphs.length - 1}>
+                  {text}
+                </BioParagraph>
+              ))}
+            </div>
+
+            {/* Full Bio Modal (Mobile/Tablet Only - Up to 1024px) */}
+            <AnimatePresence>
+              {showFullBio && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 lg:hidden">
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    onClick={() => setShowFullBio(false)}
+                    className="absolute inset-0 bg-black/90 backdrop-blur-2xl"
+                  />
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                    className="relative w-full max-h-[80vh] overflow-hidden bg-[#0a0a0a] border border-white/10 rounded-[32px] flex flex-col shadow-2xl"
+                  >
+                    <div className="p-8 border-b border-white/5 flex items-center justify-between sticky top-0 bg-[#0a0a0a] z-10">
+                      <h3 className="text-xl font-black uppercase tracking-widest text-white italic">Full Story</h3>
+                      <button onClick={() => setShowFullBio(false)} className="size-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white">
+                        <X className="size-5" />
+                      </button>
+                    </div>
+                    <div className="p-8 overflow-y-auto space-y-10 custom-scrollbar">
+                      {bioParagraphs.map((text, idx) => (
+                        <p key={idx} className="text-base font-medium leading-relaxed text-white/60 uppercase tracking-wide first-of-type:text-white">
+                          {text}
+                        </p>
+                      ))}
+                    </div>
+                  </motion.div>
+                </div>
+              )}
+            </AnimatePresence>
+          </div>
+
         </div>
       </div>
     </section>

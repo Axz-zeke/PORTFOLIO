@@ -52,18 +52,18 @@ Utilities: Lucide Icons, Date-fns, Recharts, HTML5-QRCode.`;
   const sections = fullDescription.split(/(?=Core Features:|Tech Stack:)/);
 
   return (
-    <section id="projects" className="min-h-screen flex flex-col justify-center py-32 px-6">
+    <section id="projects" className="min-h-screen flex flex-col justify-center pt-28 pb-12 md:py-32 px-6">
       <div className="max-w-[1400px] mx-auto w-full">
-        <motion.h2 
+        <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-5xl md:text-8xl font-black text-center mb-16 text-white tracking-tighter"
+          className="text-4xl md:text-8xl font-black text-center mb-10 md:mb-16 text-white tracking-tighter"
         >
           PROJECTS<span className="text-white/10">.</span>
         </motion.h2>
 
-        <motion.div 
+        <motion.div
           layout
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -72,58 +72,69 @@ Utilities: Lucide Icons, Date-fns, Recharts, HTML5-QRCode.`;
           className="relative"
         >
           {/* Main Layout Container — Dynamically changes layout on expand */}
-          <motion.div 
-            layout 
-            className={`flex flex-col ${isExpanded ? 'items-center gap-16' : 'lg:flex-row lg:items-center gap-12 lg:gap-20'}`}
+          <motion.div
+            layout
+            className={`flex flex-col ${isExpanded ? 'items-center gap-16' : 'lg:flex-row lg:items-center gap-8 lg:gap-20'}`}
           >
             {/* Left/Top: Video Wrapper — Centers and grows on expand */}
-            <motion.div 
+            <motion.div
               layout
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className={`relative shadow-[0_0_120px_rgba(255,255,255,0.03)] border border-white/5 bg-white/[0.02] rounded-[40px] overflow-hidden 
-                ${isExpanded ? 'w-full max-w-5xl aspect-video' : 'w-full lg:w-[62%] aspect-video'}
-              `}
+              className={`relative flex flex-col ${isExpanded ? 'w-full max-w-5xl' : 'w-full lg:w-[62%]'} gap-3 md:gap-6`}
             >
-              <video 
-                src="/preview.mp4" 
-                autoPlay 
-                loop 
-                muted 
-                playsInline 
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
+              {/* Mobile-only Badge — Top of Preview */}
+              <motion.div layout className="lg:hidden flex justify-center">
+                <Badge
+                  variant="outline"
+                  className="w-fit border-white/10 text-white/40 text-[9px] font-black uppercase tracking-[0.2em] px-2.5 py-1 rounded-lg bg-white/5"
+                >
+                  Enterprise Solution
+                </Badge>
+              </motion.div>
+
+              <div className={`relative shadow-[0_0_120px_rgba(255,255,255,0.03)] border border-white/5 bg-white/[0.02] rounded-[40px] overflow-hidden aspect-video w-full`}>
+                <video
+                  src="/preview.mp4"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
+              </div>
             </motion.div>
 
             {/* Right/Bottom: Content Summary — Shifts below on expand */}
-            <motion.div 
+            <motion.div
               layout
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className={`flex flex-col ${isExpanded ? 'w-full max-w-[1400px] text-center items-center' : 'w-full lg:w-[38%]'}`}
+              className={`flex flex-col ${isExpanded ? 'w-full max-w-[1400px] text-center items-center' : 'w-full lg:w-[38%] items-start text-left'}`}
             >
-              <motion.div layout transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }} className="mb-0 flex flex-col items-inherit">
-                <motion.div layout>
-                  <Badge 
-                    variant="outline" 
+              <motion.div layout transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }} className="mb-0 flex flex-col items-start">
+                {/* Desktop-only Badge */}
+                <motion.div layout className="hidden lg:block">
+                  <Badge
+                    variant="outline"
                     className={`w-fit border-white/10 text-white/40 text-[10px] font-black uppercase tracking-[0.2em] px-3 py-1 rounded-lg mb-6 bg-white/5 ${isExpanded ? 'mx-auto' : ''}`}
                   >
                     Enterprise Solution
                   </Badge>
                 </motion.div>
-                
-                <motion.h3 
+
+                <motion.h3
                   layout
                   transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                  className={`font-black text-white leading-[1.1] tracking-tighter transition-all duration-500 whitespace-nowrap
-                  ${isExpanded ? 'text-4xl md:text-6xl xl:text-8xl mb-6' : 'text-4xl md:text-5xl xl:text-7xl mb-8'}
+                  className={`font-black text-white leading-[1.1] tracking-tighter transition-all duration-500
+                  ${isExpanded ? 'text-3xl md:text-6xl xl:text-8xl mb-6' : 'text-3xl md:text-5xl xl:text-7xl mb-4 md:mb-8'}
                 `}>
                   {isExpanded ? (
                     "ShoreAgents Assets Management"
                   ) : (
-                    <>ShoreAgents <br /> Assets Management</>
+                    <>ShoreAgents <br className="hidden md:block" /> Assets Management</>
                   )}
                 </motion.h3>
-                
+
                 <AnimatePresence mode="wait">
                   {!isExpanded && (
                     <motion.div
@@ -133,27 +144,27 @@ Utilities: Lucide Icons, Date-fns, Recharts, HTML5-QRCode.`;
                       exit={{ opacity: 0, y: -10 }}
                       transition={{ duration: 0.4 }}
                     >
-                      <p className="text-white/60 text-base md:text-xl leading-relaxed mb-8 font-medium">
+                      <p className="text-white/60 text-sm md:text-xl leading-relaxed mb-6 md:mb-8 font-medium">
                         ShoreAgents Assets Management is a modern, full-stack enterprise solution designed to simplify the lifecycle management of corporate assets. From acquisition to maintenance, the platform provides a centralized hub for tracking personnel and equipment.
                       </p>
 
-                      <div className="flex items-center gap-6">
+                      <div className="flex items-center gap-4 md:gap-6">
                         <button
                           onClick={() => setIsExpanded(true)}
-                          className="h-12 px-8 rounded-full border border-white/10 bg-white/5 text-[10px] font-black uppercase tracking-[0.2em] text-white/40 hover:text-white hover:border-white/20 transition-all flex items-center gap-3 bg-white/5 hover:scale-105 active:scale-95"
+                          className="h-10 md:h-12 px-5 md:px-8 rounded-full border border-white/10 bg-white/5 text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-white/40 hover:text-white hover:border-white/20 transition-all flex items-center gap-2 md:gap-3 bg-white/5 hover:scale-105 active:scale-95"
                         >
-                          <LayoutGrid size={14} className="text-white/20 transition-all" />
-                          System Details
+                          <LayoutGrid size={12} className="text-white/20 transition-all" />
+                          Details
                         </button>
 
-                        <a 
-                          href="https://shore-agents-assets-management.vercel.app/" 
-                          target="_blank" 
+                        <a
+                          href="https://shore-agents-assets-management.vercel.app/"
+                          target="_blank"
                           rel="noopener noreferrer"
-                          className="h-12 px-8 rounded-full bg-white text-black text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-2 hover:scale-105 transition-all shadow-xl active:scale-95"
+                          className="h-10 md:h-12 px-5 md:px-8 rounded-full bg-white text-black text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-2 hover:scale-105 transition-all shadow-xl active:scale-95"
                         >
                           View Site
-                          <ArrowRight size={14} />
+                          <ArrowRight size={12} />
                         </a>
                       </div>
                     </motion.div>
@@ -183,8 +194,8 @@ Utilities: Lucide Icons, Date-fns, Recharts, HTML5-QRCode.`;
                       const isFeature = heading === "Core Features:" || heading === "Tech Stack:";
 
                       return (
-                        <motion.div 
-                          key={idx} 
+                        <motion.div
+                          key={idx}
                           initial={{ opacity: 0, y: 40 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: 0.2 + (idx * 0.1), duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
@@ -207,7 +218,7 @@ Utilities: Lucide Icons, Date-fns, Recharts, HTML5-QRCode.`;
                           ) : (
                             <div className="space-y-8 max-w-4xl">
                               {lines.filter(l => l.trim()).map((line, lIdx) => (
-                                <p key={lIdx} className="text-white/60 text-lg md:text-xl leading-relaxed first-of-type:font-medium">
+                                <p key={lIdx} className="text-white/60 text-base md:text-xl leading-relaxed first-of-type:font-medium text-center md:text-left">
                                   {line.trim()}
                                 </p>
                               ))}
@@ -228,9 +239,9 @@ Utilities: Lucide Icons, Date-fns, Recharts, HTML5-QRCode.`;
                       Back to Overview
                     </button>
 
-                    <a 
-                      href="https://shore-agents-assets-management.vercel.app/" 
-                      target="_blank" 
+                    <a
+                      href="https://shore-agents-assets-management.vercel.app/"
+                      target="_blank"
                       rel="noopener noreferrer"
                       className="h-14 px-10 rounded-full bg-white text-black text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-2 hover:scale-105 transition-all shadow-2xl active:scale-95"
                     >
@@ -282,7 +293,7 @@ export default function Home() {
             {/* Navigation */}
             <motion.nav
               style={{ opacity: navOpacity, y: navY, scale: navScale }}
-              className="fixed top-0 left-0 w-full z-50 px-6 py-6 flex items-center justify-between pointer-events-none data-[visible=true]:pointer-events-auto"
+              className="fixed top-0 left-0 w-full z-50 px-4 md:px-6 py-3 md:py-6 flex items-center justify-between pointer-events-none data-[visible=true]:pointer-events-auto"
               data-visible={scrollY.get() > 100}
             >
               {/* Name — top left, stacked like reference */}
@@ -299,13 +310,19 @@ export default function Home() {
               </div>
 
               <div className="flex items-center gap-2 pointer-events-auto">
+                <a href="/Alexander_Lopez_Resume.pdf" download="Alexander_Lopez_Resume.pdf" className="hidden md:block">
+                  <button className="h-9 px-5 flex items-center gap-2 rounded-xl border border-white/10 bg-black/40 text-white text-[10px] font-black uppercase tracking-widest hover:bg-white hover:text-black transition-all">
+                    Resume
+                    <Download size={14} />
+                  </button>
+                </a>
                 <a href="https://github.com/Axz-zeke" target="_blank" rel="noopener noreferrer">
                   <div className="h-9 w-9 flex items-center justify-center rounded-xl border border-white/10 bg-black/40 backdrop-blur-md hover:bg-white hover:text-black text-white transition-all cursor-pointer">
                     <Github size={16} />
                   </div>
                 </a>
                 <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-                  <button className="h-9 px-5 flex items-center gap-2 rounded-xl border border-white bg-white text-black text-[10px] font-black uppercase tracking-widest hover:bg-white/80 transition-all">
+                  <button className="h-8 md:h-9 px-3 md:px-5 flex items-center gap-2 rounded-xl border border-white bg-white text-black text-[10px] font-black uppercase tracking-widest hover:bg-white/80 transition-all">
                     Let's Talk
                   </button>
                 </a>
@@ -320,16 +337,30 @@ export default function Home() {
             </motion.nav>
 
             {/* Mobile Menu */}
-            {menuOpen && (
-              <div className="fixed top-[72px] left-0 w-full z-40 bg-[#050505]/95 backdrop-blur-xl border-b border-white/10 flex flex-col items-center gap-6 py-8 md:hidden">
-                {["#about", "#projects", "#contact"].map((href) => (
-                  <a key={href} href={href} onClick={() => setMenuOpen(false)}
-                    className="text-sm font-black uppercase tracking-widest hover:text-white transition-colors text-white/60">
-                    {href.replace("#", "")}
+            <AnimatePresence>
+              {menuOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  className="fixed top-[68px] md:top-[88px] left-0 w-full h-[calc(100vh-68px)] z-40 bg-[#050505]/95 backdrop-blur-xl border-b border-white/10 flex flex-col items-center justify-center gap-8 py-8 md:hidden"
+                >
+                  {["#about", "#projects", "#contact"].map((href) => (
+                    <a key={href} href={href} onClick={() => setMenuOpen(false)}
+                      className="text-3xl font-black uppercase tracking-widest hover:text-white transition-colors text-white/40">
+                      {href.replace("#", "")}
+                    </a>
+                  ))}
+                  <div className="w-12 h-px bg-white/10 my-2" />
+                  <a href="/Alexander_Lopez_Resume.pdf" download="Alexander_Lopez_Resume.pdf" onClick={() => setMenuOpen(false)}>
+                    <button className="h-14 px-8 rounded-2xl bg-white text-black text-xs font-black uppercase tracking-widest flex items-center gap-3 shadow-2xl">
+                      Download Resume
+                      <Download size={16} />
+                    </button>
                   </a>
-                ))}
-              </div>
-            )}
+                </motion.div>
+              )}
+            </AnimatePresence>
 
             {/* NEW 1st SECTION: INTRO ONLY */}
             <section className="relative w-full h-[100dvh] flex flex-col items-center justify-center overflow-hidden bg-[#050505]">
@@ -346,14 +377,14 @@ export default function Home() {
                   transition={{ duration: 0.8, ease: "easeOut" }}
                   className="mb-6"
                 >
-                  <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white/30">Portfolio 2025</span>
+                  <span className="text-xs font-black uppercase tracking-[0.4em] text-white/30">Portfolio</span>
                 </motion.div>
 
                 <motion.h1
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-                  className="text-7xl sm:text-8xl md:text-9xl lg:text-[12rem] font-black tracking-tighter leading-none text-white select-none"
+                  className="text-5xl sm:text-8xl md:text-9xl lg:text-[12rem] font-black tracking-tighter leading-none text-white select-none px-4"
                 >
                   ALEXANDER<br />
                   LOPEZ
@@ -366,7 +397,6 @@ export default function Home() {
                   className="mt-12 flex flex-col items-center gap-4"
                 >
                   <p className="text-xs font-black uppercase tracking-[0.3em] text-white/50">IT Specialist • Full-Stack Developer</p>
-                  <div className="w-px h-12 bg-white/10 mt-4 animate-bounce" />
                 </motion.div>
               </motion.div>
 

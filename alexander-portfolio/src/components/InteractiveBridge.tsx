@@ -62,7 +62,7 @@ function Parquee({ baseVelocity = 100 }: ParqueeProps) {
         }}
       >
         {[...Array(6)].map((_, i) => (
-          <span key={i} className="text-[12vw] font-black tracking-tighter text-[#1a1a1b] uppercase leading-none select-none px-12 block">
+          <span key={i} className="text-[22vw] md:text-[14vw] font-black tracking-tightest sm:tracking-tighter text-[#1a1a1b] uppercase leading-none select-none px-6 md:px-12 block">
             READY TO KNOW ME?
           </span>
         ))}

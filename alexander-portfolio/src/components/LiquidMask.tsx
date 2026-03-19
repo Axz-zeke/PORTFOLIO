@@ -176,14 +176,39 @@ export default function LiquidMask({
     const displayMesh = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), displayMaterial);
     scene.add(displayMesh);
 
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      mouseRef.current.x = (e.clientX - rect.left) / rect.width;
-      mouseRef.current.y = 1.0 - (e.clientY - rect.top) / rect.height;
+    const container = containerRef.current;
+    if (!container) return;
+
+    const handleMouseMove = (e: MouseEvent | TouchEvent) => {
+      const isTouch = 'touches' in e;
+      
+      // Prevent scrolling on mobile when interacting with the mask
+      if (isTouch) {
+        if (e.cancelable) e.preventDefault();
+      }
+
+      const rect = container.getBoundingClientRect();
+      const clientX = isTouch ? (e as TouchEvent).touches[0]?.clientX : (e as MouseEvent).clientX;
+      const clientY = isTouch ? (e as TouchEvent).touches[0]?.clientY : (e as MouseEvent).clientY;
+      
+      if (clientX === undefined || clientY === undefined) return;
+
+      mouseRef.current.x = (clientX - rect.left) / rect.width;
+      mouseRef.current.y = 1.0 - (clientY - rect.top) / rect.height;
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
+    const handleReset = () => {
+      mouseRef.current.set(-1, -1);
+    };
+
+    container.addEventListener("mousemove", handleMouseMove);
+    container.addEventListener("mousedown", handleMouseMove);
+    container.addEventListener("touchstart", handleMouseMove, { passive: false });
+    container.addEventListener("touchmove", handleMouseMove, { passive: false });
+    container.addEventListener("touchend", handleReset);
+    container.addEventListener("mouseleave", handleReset);
+    window.addEventListener("touchend", handleReset);
+    window.addEventListener("mouseup", handleReset);
 
     let animationFrameId: number;
     const animate = () => {
@@ -207,16 +232,20 @@ export default function LiquidMask({
     animate();
 
     const handleResize = () => {
-      if (!containerRef.current) return;
-      const w = containerRef.current.clientWidth;
-      const h = containerRef.current.clientHeight;
+      const w = container.clientWidth;
+      const h = container.clientHeight;
       renderer.setSize(w, h);
       simMaterial.uniforms.uAspect.value.set(w / Math.min(w, h), h / Math.min(w, h));
     };
     window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
+      container.removeEventListener("mousemove", handleMouseMove);
+      container.removeEventListener("mousedown", handleMouseMove);
+      container.removeEventListener("touchstart", handleMouseMove);
+      container.removeEventListener("touchmove", handleMouseMove);
+      container.removeEventListener("touchend", handleReset);
+      container.removeEventListener("mouseleave", handleReset);
       window.removeEventListener("resize", handleResize);
       cancelAnimationFrame(animationFrameId);
       renderer.dispose();

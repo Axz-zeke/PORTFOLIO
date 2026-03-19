@@ -32,9 +32,9 @@ const BentoItem = ({ children, className = "", delay = 0 }: { children: React.Re
 
 export default function BentoGrid() {
     return (
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 max-w-7xl mx-auto p-4 md:p-8">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 max-w-7xl mx-auto p-4 lg:p-8">
             {/* Experience Section */}
-            <BentoItem className="md:col-span-2 md:row-span-2 flex flex-col justify-between overflow-hidden relative group">
+            <BentoItem className="lg:col-span-2 lg:row-span-2 flex flex-col justify-between overflow-hidden relative group">
                 <div className="absolute inset-0 bg-black/[0.01] pointer-events-none" />
                 <div>
                     <Badge variant="outline" className="mb-4 border-white/10 text-white/30 bg-white/5 text-[10px] font-black uppercase tracking-widest">Experience</Badge>
@@ -64,7 +64,7 @@ export default function BentoGrid() {
 
             {/* Education & Achievements */}
             {/* Education & Achievements — Neutralized */}
-            <BentoItem className="md:col-span-2 flex flex-col justify-center bg-white/[0.01]">
+            <BentoItem className="lg:col-span-2 flex flex-col justify-center bg-white/[0.01]">
                 <Badge variant="outline" className="w-fit mb-4 border-white/10 text-white/30 bg-white/5 text-[10px] font-black uppercase tracking-widest">Education</Badge>
                 <h3 className="text-2xl font-black text-white leading-tight">Bachelor of Science in Information Technology</h3>
                 <p className="text-xs font-bold text-white/30 uppercase tracking-widest mt-1">Major in Network Administration</p>
@@ -105,7 +105,7 @@ export default function BentoGrid() {
             </BentoItem>
 
             {/* Project Card */}
-            <BentoItem className="md:col-span-2 bg-white/[0.01] flex flex-col justify-between">
+            <BentoItem className="lg:col-span-2 bg-white/[0.01] flex flex-col justify-between">
                 <div>
                     <div className="flex items-center justify-between mb-4">
                         <h4 className="font-black text-xl text-white">PERMIT EASE</h4>
@@ -128,7 +128,7 @@ export default function BentoGrid() {
             </BentoItem>
 
             {/* Cloud & Tools */}
-            <BentoItem className="md:col-span-1 bg-white/[0.01]">
+            <BentoItem className="lg:col-span-1 bg-white/[0.01]">
                 <div className="flex items-center gap-2 mb-6">
                     <Cloud className="w-5 h-5 text-white/20" />
                     <h4 className="font-black text-xs uppercase tracking-widest text-white">Cloud</h4>
@@ -152,7 +152,7 @@ export default function BentoGrid() {
             </BentoItem>
 
             {/* Contact Card */}
-            <BentoItem className="md:col-span-1 bg-white text-black flex flex-col items-center justify-center text-center">
+            <BentoItem className="lg:col-span-1 bg-white text-black flex flex-col items-center justify-center text-center">
                 <Globe className="w-10 h-10 mb-4 animate-spin-slow opacity-60" />
                 <h4 className="font-black text-sm uppercase tracking-widest">Available for Work</h4>
                 <p className="text-xs opacity-60 mt-2 italic">Mabalacat, Philippines</p>
