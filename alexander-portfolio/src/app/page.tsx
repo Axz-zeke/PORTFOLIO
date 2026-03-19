@@ -10,6 +10,7 @@ import TerminalLoader from "@/components/TerminalLoader";
 import CustomCursor from "@/components/CustomCursor";
 import AboutStorytelling from "@/components/AboutStorytelling";
 import TechStack from "@/components/TechStack";
+import ContactSection from "@/components/ContactSection";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -387,38 +388,8 @@ export default function Home() {
             {/* Projects Section — Spotlight Layout */}
             <ProjectSection />
 
-            {/* CTA Section — fitted to viewport with premium rounding */}
-            <section id="contact" className="min-h-[90vh] flex flex-col justify-center px-6 relative overflow-hidden bg-black text-white rounded-t-[60px] md:rounded-t-[120px] mt-10">
-              <div className="absolute inset-0 opacity-10 pointer-events-none"
-                style={{
-                  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='100' viewBox='0 0 40 100'%3E%3Cpath d='M20 0 Q 30 12.5, 20 25 Q 10 37.5, 20 50 Q 30 62.5, 20 75 Q 10 87.5, 20 100' fill='none' stroke='%23ffffff' stroke-width='1'/%3E%3C/svg%3E")`,
-                  backgroundSize: "40px 100px",
-                }}
-              />
-              <div className="max-w-5xl mx-auto text-center relative z-10 flex flex-col items-center">
-                <h2 className="text-5xl md:text-8xl font-black mb-12 leading-tight tracking-tighter uppercase italic">
-                  READY TO <br />
-                  EVOLVE?
-                </h2>
-                <div className="flex flex-wrap items-center justify-center gap-6">
-                  <a href="mailto:alexandersanalilalopez05@gmail.com"
-                    className="h-16 px-10 bg-white text-black font-black text-sm rounded-2xl flex items-center gap-2 hover:scale-[1.05] transition-all shadow-2xl">
-                    <Mail className="shrink-0" />
-                    <span className="truncate">alexandersanalilalopez05@gmail.com</span>
-                  </a>
-                  <div className="flex gap-4">
-                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
-                      className="size-16 border border-white/20 rounded-2xl flex items-center justify-center hover:bg-white/10 transition-colors">
-                      <Linkedin />
-                    </a>
-                    <a href="https://github.com" target="_blank" rel="noopener noreferrer"
-                      className="size-16 border border-white/20 rounded-2xl flex items-center justify-center hover:bg-white/10 transition-colors">
-                      <Github />
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </section>
+            {/* Contact Section — Premium Redesign */}
+            <ContactSection />
 
             {/* Footer — solid black to match CTA */}
             <footer className="py-12 px-6 text-center bg-black">
