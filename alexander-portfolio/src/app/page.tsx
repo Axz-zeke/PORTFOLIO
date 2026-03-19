@@ -11,6 +11,7 @@ import CustomCursor from "@/components/CustomCursor";
 import AboutStorytelling from "@/components/AboutStorytelling";
 import TechStack from "@/components/TechStack";
 import ContactSection from "@/components/ContactSection";
+import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -291,14 +292,14 @@ export default function Home() {
               </div>
 
               {/* Desktop Nav Links */}
-              <div className="hidden md:flex items-center gap-6 bg-black/40 border border-white/10 px-6 py-2 rounded-2xl backdrop-blur-xl shadow-sm">
+              <div className="hidden md:flex items-center gap-6 bg-black/40 border border-white/10 px-6 py-2 rounded-2xl backdrop-blur-xl shadow-sm pointer-events-auto">
                 <a href="#about" className="text-xs font-black uppercase tracking-widest hover:text-white transition-colors text-white/60">About</a>
                 <a href="#projects" className="text-xs font-black uppercase tracking-widest hover:text-white transition-colors text-white/60">Projects</a>
                 <a href="#contact" className="text-xs font-black uppercase tracking-widest hover:text-white transition-colors text-white/60">Contact</a>
               </div>
 
-              <div className="flex items-center gap-2">
-                <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+              <div className="flex items-center gap-2 pointer-events-auto">
+                <a href="https://github.com/Axz-zeke" target="_blank" rel="noopener noreferrer">
                   <div className="h-9 w-9 flex items-center justify-center rounded-xl border border-white/10 bg-black/40 backdrop-blur-md hover:bg-white hover:text-black text-white transition-all cursor-pointer">
                     <Github size={16} />
                   </div>
@@ -388,13 +389,10 @@ export default function Home() {
             {/* Projects Section — Spotlight Layout */}
             <ProjectSection />
 
-            {/* Contact Section — Premium Redesign */}
+            {/* Contact Section — Now the final section */}
             <ContactSection />
 
-            {/* Footer — solid black to match CTA */}
-            <footer className="py-12 px-6 text-center bg-black">
-              <p className="text-[10px] text-white/30 font-black uppercase tracking-[0.4em]">© 2025 ALEXANDER LOPEZ. CRAFTED WITH NEXT.JS &amp; PASSION.</p>
-            </footer>
+            <Footer />
           </motion.main>
         )}
       </AnimatePresence>

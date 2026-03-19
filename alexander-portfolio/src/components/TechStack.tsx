@@ -11,7 +11,6 @@ const slugs = [
     "typescript",
     "javascript",
     "html5",
-    "css3",
     "python",
     "django",
     "postgresql",
@@ -22,22 +21,14 @@ const slugs = [
     "zod",
     "docker",
     "github",
-    "visualstudiocode",
-    "amazonaws",
     "figma",
-    "canva",
     "fortinet",
-    "powerapps",
     "googleappsscript",
     "dotnet",
     "lucide",
-    "recharts",
     "nodedotjs",
     "mongodb",
-    "cursor",
-    "antigravity", // Custom logo below
     "vlcmediaplayer",
-    "windowsterminal",
     "ubiquiti",
     "googledrive",
     "vercel",
@@ -48,16 +39,12 @@ const slugs = [
 ];
 
 export default function TechStack() {
-    // Custom images for brands not in Simple Icons
-    const customImages = [
-        "https://upload.wikimedia.org/wikipedia/commons/e/e1/Hikvision_logo.svg",
-        "https://www.zkteco.com/static/images/logo.png",
-        "https://www.anviz.com/Public/Home/images/logo.png", // CrossChex related
-    ];
+    // Removed corporate logos as they were being blocked by client/CORS
+    const customImages: string[] = [];
 
     const images = [
         ...slugs.map((s) => {
-            const whiteIcons = ["nextdotjs", "github", "vercel", "cursor"];
+            const whiteIcons = ["nextdotjs", "github", "vercel"];
             return `https://cdn.simpleicons.org/${s}${whiteIcons.includes(s) ? "/white" : ""}`;
         }),
         ...customImages,

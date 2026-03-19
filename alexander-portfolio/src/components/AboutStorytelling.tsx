@@ -111,11 +111,16 @@ export default function AboutStorytelling() {
               viewport={{ once: true }}
               className="flex flex-col sm:flex-row items-center gap-4 justify-center md:justify-start mt-12 md:mt-20"
             >
-              <button className="h-14 px-8 rounded-2xl bg-white text-black text-sm font-black uppercase tracking-widest flex items-center gap-2 hover:scale-[1.03] active:scale-[0.97] transition-transform shadow-xl shadow-white/5 cursor-pointer">
-                Download Resume
-                <Download className="w-4 h-4" />
-              </button>
-              <button className="h-14 px-8 rounded-2xl border border-white/20 bg-white/5 backdrop-blur-md text-sm font-black uppercase tracking-widest text-white flex items-center gap-2 hover:bg-white hover:text-black transition-all group cursor-pointer" onClick={() => window.location.href = '#experience'}>
+              <a href="/Alexander_Lopez_Resume.pdf" download="Alexander_Lopez_Resume.pdf">
+                <button className="h-14 px-8 rounded-2xl bg-white text-black text-sm font-black uppercase tracking-widest flex items-center gap-2 hover:scale-[1.03] active:scale-[0.97] transition-transform shadow-xl shadow-white/5 cursor-pointer">
+                  Download Resume
+                  <Download className="w-4 h-4" />
+                </button>
+              </a>
+              <button 
+                className="h-14 px-8 rounded-2xl border border-white/20 bg-white/5 backdrop-blur-md text-sm font-black uppercase tracking-widest text-white flex items-center gap-2 hover:bg-white hover:text-black transition-all group cursor-pointer" 
+                onClick={() => window.location.href = '#projects'}
+              >
                 View Projects
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
