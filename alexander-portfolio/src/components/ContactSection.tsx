@@ -83,7 +83,7 @@ export default function ContactSection() {
                 </span>
               </h2>
               <p className="max-w-md mx-0 text-white/40 text-base sm:text-lg font-bold uppercase tracking-widest leading-relaxed border-l-2 border-white/10 px-6 lg:pl-6">
-                Have a project in mind or just want to chat? Reach out and let's build something exceptional together.
+                Have a project in mind or just want to chat? Reach out and let's build something together.
               </p>
             </motion.div>
 
