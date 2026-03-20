@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { Mail, Send, Github, Linkedin, MessageSquare, User, AtSign } from "lucide-react";
 
@@ -11,7 +11,10 @@ export default function ContactSection() {
     message: "",
   });
   const [emailError, setEmailError] = useState("");
+  const [captchaError, setCaptchaError] = useState("");
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error" | "reviewing">("idle");
+  const [isVerified, setIsVerified] = useState(false);
+  const sliderRef = useRef<HTMLDivElement>(null);
 
   const validateEmail = (email: string) => {
     return String(email)
@@ -27,6 +30,11 @@ export default function ContactSection() {
 
     if (!validateEmail(formData.email)) {
       setEmailError("Please enter a valid email address.");
+      return;
+    }
+
+    if (!isVerified) {
+      setCaptchaError("Please verify that you are not a robot.");
       return;
     }
 
@@ -53,6 +61,7 @@ export default function ContactSection() {
       if (response.ok) {
         setStatus("success");
         setFormData({ name: "", email: "", message: "" });
+        setIsVerified(false);
         setTimeout(() => setStatus("idle"), 5000);
       } else {
         setStatus("error");
@@ -141,15 +150,15 @@ export default function ContactSection() {
                     <div className="space-y-6 pt-4">
                       <div className="border-b border-white/10 pb-4">
                         <p className="text-[10px] font-black uppercase tracking-widest text-white/20 mb-2">Ship to</p>
-                        <p className="text-lg font-bold text-white tracking-widest uppercase">{formData.name}</p>
+                        <p className="text-lg font-bold text-white tracking-widest">{formData.name}</p>
                       </div>
                       <div className="border-b border-white/20 pb-4">
                         <p className="text-[10px] font-black uppercase tracking-widest text-white/40 mb-2">Reply to</p>
-                        <p className="text-lg font-bold text-white tracking-widest uppercase">{formData.email}</p>
+                        <p className="text-lg font-bold text-white tracking-widest">{formData.email}</p>
                       </div>
                       <div className="pb-4">
                         <p className="text-[10px] font-black uppercase tracking-widest text-white/20 mb-2">Message</p>
-                        <p className="text-base text-white/60 leading-relaxed font-bold uppercase tracking-wider line-clamp-3">"{formData.message}"</p>
+                        <p className="text-base text-white/60 leading-relaxed font-bold tracking-wider line-clamp-3">"{formData.message}"</p>
                       </div>
                     </div>
 
@@ -169,7 +178,7 @@ export default function ContactSection() {
                         type="text"
                         placeholder="ALEXANDER LOPEZ"
                         required
-                        className="w-full bg-transparent border-b border-white/10 py-4 text-center lg:text-left text-base text-white/90 placeholder:text-white/20 focus:outline-none focus:border-white transition-all font-bold tracking-widest uppercase"
+                        className="w-full bg-transparent border-b border-white/10 py-4 text-center lg:text-left text-base text-white/90 placeholder:text-white/20 focus:outline-none focus:border-white transition-all font-bold tracking-widest"
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       />
@@ -182,7 +191,7 @@ export default function ContactSection() {
                           type="email"
                           placeholder="ALEX@EXAMPLE.COM"
                           required
-                          className={`w-full bg-transparent border-b py-4 text-center lg:text-left text-base text-white/90 placeholder:text-white/20 focus:outline-none transition-all font-bold tracking-widest uppercase ${emailError ? 'border-red-500' : 'border-white/10 focus:border-white'}`}
+                          className={`w-full bg-transparent border-b py-4 text-center lg:text-left text-base text-white/90 placeholder:text-white/20 focus:outline-none transition-all font-bold tracking-widest ${emailError ? 'border-red-500' : 'border-white/10 focus:border-white'}`}
                           value={formData.email}
                           onBlur={() => {
                             if (formData.email && !validateEmail(formData.email)) {
@@ -214,10 +223,87 @@ export default function ContactSection() {
                         placeholder="HOW CAN I HELP YOU?"
                         required
                         rows={4}
-                        className="w-full bg-transparent border-b border-white/10 py-4 text-center lg:text-left text-base text-white/90 placeholder:text-white/20 focus:outline-none focus:border-white transition-all font-bold tracking-widest resize-none uppercase"
+                        className="w-full bg-transparent border-b border-white/10 py-4 text-center lg:text-left text-base text-white/90 placeholder:text-white/20 focus:outline-none focus:border-white transition-all font-bold tracking-widest resize-none"
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       />
+                    </div>
+
+                    {/* Custom Slider CAPTCHA */}
+                    <div className="pt-6">
+                      <div
+                        ref={sliderRef}
+                        className={`relative h-14 w-full border transition-all overflow-hidden ${isVerified ? 'border-green-500/30 bg-green-500/5' : captchaError ? 'border-red-500/50 bg-red-500/5' : 'border-white/10 bg-white/[0.02]'
+                          }`}
+                      >
+                        {/* Track Background Text */}
+                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                          <p className={`text-[10px] font-black uppercase tracking-[0.4em] transition-opacity duration-300 ${isVerified ? 'text-green-500' : 'text-white/20'
+                            }`}>
+                            {isVerified ? "Verification Complete" : "Slide to Verify"}
+                          </p>
+                        </div>
+
+                        {/* Slider Track Progress (Green highlight) */}
+                        <motion.div
+                          initial={{ width: 0 }}
+                          animate={{ width: isVerified ? "100%" : 0 }}
+                          className="absolute inset-y-0 left-0 bg-green-500/10 pointer-events-none"
+                        />
+
+                        {/* Draggable Handle */}
+                        {!isVerified ? (
+                          <motion.div
+                            drag="x"
+                            dragConstraints={sliderRef}
+                            dragElastic={0}
+                            dragMomentum={false}
+                            onDragEnd={(event, info) => {
+                              const containerWidth = sliderRef.current?.offsetWidth || 0;
+                              const handleWidth = 56; // aspect-square h-14
+                              const threshold = containerWidth - handleWidth - 10;
+                              
+                              if (info.offset.x > threshold * 0.8) {
+                                setIsVerified(true);
+                                setCaptchaError("");
+                              }
+                            }}
+                            className="absolute left-0 top-0 bottom-0 aspect-square bg-white flex items-center justify-center cursor-grab active:cursor-grabbing z-20 group/handle transition-colors"
+                          >
+                            <div className="flex gap-0.5 pointer-events-none">
+                              <div className="w-0.5 h-4 bg-black/20" />
+                              <div className="w-0.5 h-4 bg-black/20" />
+                              <div className="w-0.5 h-4 bg-black/20" />
+                            </div>
+                          </motion.div>
+                        ) : (
+                          <motion.div
+                            initial={{ x: "calc(100% - 3.5rem)" }}
+                            className="absolute left-0 top-0 bottom-0 aspect-square bg-green-500 flex items-center justify-center z-20"
+                          >
+                            <motion.svg
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              className="size-5 text-black"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              strokeWidth={4}
+                            >
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                            </motion.svg>
+                          </motion.div>
+                        )}
+                      </div>
+                      {captchaError && (
+                        <motion.p
+                          initial={{ opacity: 0, y: -5 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          className="text-[10px] font-bold text-red-500 mt-2 uppercase tracking-widest text-center lg:text-left ml-1"
+                        >
+                          {captchaError}
+                        </motion.p>
+                      )}
                     </div>
                   </div>
                 )}
