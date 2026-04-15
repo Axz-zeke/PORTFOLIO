@@ -28,7 +28,19 @@ import {
   LayoutGrid
 } from "lucide-react";
 
-const PROJECTS = [
+type ProjectDef = {
+  title: string;
+  titleMobile: React.ReactNode;
+  badge: string;
+  videoSrc?: string;
+  siteLink?: string;
+  imageGallery?: string[];
+  description: string;
+  fullDescription: string;
+  linkText?: string;
+};
+
+const PROJECTS: ProjectDef[] = [
   {
     title: "ShoreAgents Assets Management",
     titleMobile: <>ShoreAgents <br className="hidden md:block" /> Assets Management</>,
@@ -75,10 +87,102 @@ Task Management: Celery (Distributed Task Queue), Redis (Message Broker & Cache)
 Containerization: Docker & Docker Compose.
 Infrastructure: AWS (EC2 for hosting, CloudWatch for monitoring).
 Reporting: Automated PDF generation for permits and academic documents.`,
+  },
+  {
+    title: "PlatePulse: Recipe AI App UI/UX",
+    titleMobile: <>PlatePulse<br className="hidden md:block" /> UI/UX Design</>,
+    badge: "UI/UX Design",
+    imageGallery: Array.from({ length: 13 }, (_, i) => `/PlatePulse/${i + 1}.png`),
+    description: "A comprehensive UI/UX design for PlatePulse, an AI-powered recipe and cooking app. Designed with a focus on intuitive navigation and appetizing visuals.",
+    fullDescription: `A comprehensive UI/UX design for PlatePulse, an AI-powered recipe and cooking app. Designed with a focus on intuitive navigation and appetizing visuals.
+
+Core Features:
+User-Centric Design: Intuitive interface for browsing, saving, and generating AI-powered recipes.
+Visual Appeal: High-quality imagery integration with a modern, clean layout.
+Interactive Prototyping: Seamless transitions and user flow demonstrations.
+
+Tech Stack:
+Design Tools: Figma, Adobe XD.
+Prototyping: Interactive components and micro-animations.`,
+  },
+  {
+    title: "SPCF: UniVerse App UI/UX",
+    titleMobile: <>SPCF UniVerse<br className="hidden md:block" /> UI/UX</>,
+    badge: "UI/UX Design",
+    imageGallery: Array.from({ length: 10 }, (_, i) => `/SPCF UniVerse/${i + 1}.png`),
+    description: "UI/UX design for SPCF UniVerse, a university application aimed at centralizing student resources and campus communication.",
+    fullDescription: `UI/UX design for SPCF UniVerse, a university application aimed at centralizing student resources and campus communication.
+
+Core Features:
+Campus Connectivity: Designed interfaces for student hubs, announcements, and event tracking.
+Resource Management: Intuitive navigation for academic resources and scheduling.
+
+Tech Stack:
+Design Tools: Figma.`,
+  },
+  {
+    title: "BMBC Graphic Poster Design",
+    titleMobile: <>BMBC Graphic<br className="hidden md:block" /> Posters</>,
+    badge: "Graphic Design",
+    imageGallery: [
+      "/BMBC POSTER/PRAISE NIGHT LOGO.png", "/BMBC POSTER/2.png", "/BMBC POSTER/GMBM 1.png",
+      "/BMBC POSTER/GMBM 2.png", "/BMBC POSTER/6.png", "/BMBC POSTER/By His Grace, Through His Word, For His Glory - “A Church Fueled by Grace, Shaped by the Word, Focused on His Glory.”.png",
+      "/BMBC POSTER/11.png", "/BMBC POSTER/12.png", "/BMBC POSTER/13.png",
+      "/BMBC POSTER/8.png",
+      "/BMBC POSTER/Concert Poster 2.png", "/BMBC POSTER/Concert Poster 3.png",
+      "/BMBC POSTER/Concert Poster.png", "/BMBC POSTER/Copy of YOUTH FELLOWSHIP.png",
+      "/BMBC POSTER/3.png", "/BMBC POSTER/7.png",
+      "/BMBC POSTER/PASTOR'S FELLOWSHIP.png", "/BMBC POSTER/1.png",
+      "/BMBC POSTER/camp poster 1.png", "/BMBC POSTER/camp poster 2.png",
+      "/BMBC POSTER/camp poster 3.png", "/BMBC POSTER/ticket concert 1.png", "/BMBC POSTER/ticket concert 2.png"
+    ],
+    description: "A collection of creative and engaging graphic posters designed for BMBC church events, fellowships, and concert promotions.",
+    fullDescription: `A collection of creative and engaging graphic posters designed for BMBC church events, fellowships, and concert promotions.
+
+Core Features:
+Event Promotions: Eye-catching designs for concerts, youth fellowships, and camps.
+Thematic Graphics: Visually communicating the core message with strong typography and layout.
+Print & Digital Ready: Designed for both online social media and physical printing.
+
+Tech Stack:
+Design Tools: Adobe Photoshop, Canva.`,
+  },
+  {
+    title: "Worship Team Clothing Design",
+    titleMobile: <>BMBC Clothing<br className="hidden md:block" /> Design</>,
+    badge: "Apparel Design",
+    imageGallery: [],
+    description: "Custom apparel design created for the BMBC church worship team, combining modern aesthetics with faith-based messaging.",
+    fullDescription: `Custom apparel design created for the BMBC church worship team, combining modern aesthetics with faith-based messaging.
+
+Core Features:
+Thematic Apparel: T-shirt and merchandise designs centered around worship themes.
+Branding Identity: Cohesive visual identity for the worship group.
+
+Tech Stack:
+Design Tools: Adobe Photoshop, Illustrator.`,
+  },
+  {
+    title: "BMBC Church Countdown",
+    titleMobile: <>BMBC Church<br className="hidden md:block" /> Countdown</>,
+    badge: "Video Editing",
+    videoSrc: "/Countdown_Preview.mp4",
+    siteLink: "https://drive.google.com/file/d/1Hov-RcLA0gQVnJcouTOhr3QK7Tdp-5wP/view?usp=sharing",
+    linkText: "Watch Full Video",
+    description: "A dynamic countdown video created for BMBC Church, featuring engaging typography motions and seamless transitions.",
+    fullDescription: `A dynamic countdown video created for BMBC Church, featuring engaging typography motions and seamless transitions.
+
+Core Features:
+Motion Graphics: Custom typography animations and energetic visual pacing.
+Seamless Transitions: Smooth thematic transitions that build anticipation.
+Event Branding: Tailored specifically for the BMBC Church aesthetic and worship experience.
+
+Tech Stack:
+Software: CapCut.`,
   }
 ];
 
-function ProjectItem({ project }: { project: typeof PROJECTS[0] }) {
+function ProjectItem({ project, className }: { project: ProjectDef; className?: string }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const sections = project.fullDescription.split(/(?=Core Features:|Tech Stack:)/);
 
@@ -89,7 +193,7 @@ function ProjectItem({ project }: { project: typeof PROJECTS[0] }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.8 }}
-      className="relative mb-24 md:mb-40 last:mb-0"
+      className={`relative ${className || 'mb-24 md:mb-40 last:mb-0'}`}
     >
       {/* Main Layout Container — Dynamically changes layout on expand */}
       <motion.div
@@ -113,14 +217,31 @@ function ProjectItem({ project }: { project: typeof PROJECTS[0] }) {
           </motion.div>
 
           <div className={`relative shadow-[0_0_120px_rgba(255,255,255,0.03)] border border-white/5 bg-white/[0.02] rounded-[40px] overflow-hidden aspect-video w-full`}>
-            <video
-              src={project.videoSrc}
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="w-full h-full object-cover"
-            />
+            {project.videoSrc ? (
+              <video
+                src={project.videoSrc}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-full object-cover"
+              />
+            ) : project.imageGallery && project.imageGallery.length > 0 ? (
+              <div className="flex overflow-x-auto snap-x snap-mandatory w-full h-full [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                {project.imageGallery.map((img, i) => (
+                  <img
+                    key={i}
+                    src={img}
+                    alt={`${project.title} screenshot ${i + 1}`}
+                    className="w-full h-full object-contain bg-black/40 snap-center shrink-0"
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="w-full h-full bg-white/5 flex items-center justify-center">
+                <span className="text-white/20 font-medium text-sm">Visuals unavailable</span>
+              </div>
+            )}
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
           </div>
         </motion.div>
@@ -184,7 +305,7 @@ function ProjectItem({ project }: { project: typeof PROJECTS[0] }) {
                         rel="noopener noreferrer"
                         className="h-10 md:h-12 px-5 md:px-8 rounded-full bg-white text-black text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-2 hover:scale-105 transition-all shadow-xl active:scale-95"
                       >
-                        View Site
+                        {project.linkText || "View Site"}
                         <ArrowRight size={12} />
                       </a>
                     )}
@@ -268,7 +389,7 @@ function ProjectItem({ project }: { project: typeof PROJECTS[0] }) {
                     rel="noopener noreferrer"
                     className="h-14 px-10 rounded-full bg-white text-black text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-2 hover:scale-105 transition-all shadow-2xl active:scale-95"
                   >
-                    Explore Project
+                    {project.linkText || "Explore Project"}
                     <ArrowRight size={16} />
                   </a>
                 )}
@@ -281,6 +402,245 @@ function ProjectItem({ project }: { project: typeof PROJECTS[0] }) {
   );
 }
 
+function CollapsibleSection({ title, children, defaultOpen = false }: { title: string, children: React.ReactNode, defaultOpen?: boolean }) {
+  const [isOpen, setIsOpen] = useState(defaultOpen);
+
+  return (
+    <div className="mb-12 md:mb-20">
+      <div
+        className="flex items-center justify-between mb-8 cursor-pointer border-b border-white/10 pb-6 hover:border-white/30 transition-colors group"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <h3 className="text-3xl md:text-5xl font-black text-white tracking-tighter group-hover:text-white/80 transition-colors uppercase">{title}</h3>
+        <button className="text-white/40 group-hover:text-white transition-colors bg-white/5 rounded-full p-2 md:p-3">
+          <ChevronDown className={`transform transition-transform duration-500 ${isOpen ? 'rotate-180' : ''}`} size={28} />
+        </button>
+      </div>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="overflow-hidden"
+          >
+            <div className="pt-4 pb-8">
+              {children}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  )
+}
+
+function WebsiteProjectsView() {
+  const websiteProjects = PROJECTS.slice(0, 2);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % websiteProjects.length);
+  };
+
+  return (
+    <div className="flex flex-col items-center">
+      <div className="w-full">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentIndex}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.5 }}
+          >
+            <ProjectItem project={websiteProjects[currentIndex]} className="mb-0" />
+          </motion.div>
+        </AnimatePresence>
+      </div>
+
+      <div className="mt-12 flex justify-center w-full relative z-10">
+        <button
+          onClick={handleNext}
+          className="h-14 px-10 rounded-full border border-white/10 bg-white/5 text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] text-white hover:text-black hover:bg-white hover:border-white transition-all flex items-center gap-3 shadow-2xl active:scale-95"
+        >
+          Next Website Project
+          <ArrowRight size={16} />
+        </button>
+      </div>
+    </div>
+  )
+}
+
+function MobileProjectsView() {
+  const mobileProjects = PROJECTS.slice(2, 4);
+  const [activeTab, setActiveTab] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
+
+  // Reset page when tab changes
+  useEffect(() => {
+    setCurrentPage(0);
+  }, [activeTab]);
+
+  const images = mobileProjects[activeTab].imageGallery || [];
+  const itemsPerPage = 4;
+  const totalPages = Math.ceil(images.length / itemsPerPage);
+
+  const currentImages = images.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
+
+  const handleNext = () => {
+    setCurrentPage((prev) => (prev + 1) % totalPages);
+  };
+
+  const handlePrev = () => {
+    setCurrentPage((prev) => (prev - 1 + totalPages) % totalPages);
+  };
+
+  return (
+    <div className="flex flex-col items-center">
+      <div className="flex flex-wrap items-center justify-center gap-4 mb-12">
+        {mobileProjects.map((proj, idx) => (
+          <button
+            key={idx}
+            onClick={() => setActiveTab(idx)}
+            className={`h-12 px-8 rounded-full text-[10px] sm:text-xs font-black uppercase tracking-widest transition-all ${activeTab === idx ? "bg-white text-black shadow-[0_0_20px_rgba(255,255,255,0.3)]" : "bg-white/5 text-white/40 hover:text-white border border-white/10"}`}
+          >
+            {proj.title.split(":")[0]}
+          </button>
+        ))}
+      </div>
+
+      <div className="w-full flex items-center justify-between gap-4 md:gap-8 group">
+        {/* Left Desktop Navigation */}
+        <button
+          onClick={handlePrev}
+          className="hidden md:flex size-12 lg:size-14 justify-center items-center rounded-full bg-[#050505] border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.8)] text-white hover:bg-white hover:text-black transition-all active:scale-95 flex-shrink-0"
+        >
+          <ArrowRight className="transform rotate-180" size={20} />
+        </button>
+
+        <div className="flex-1 overflow-visible md:overflow-hidden w-full relative">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={`${activeTab}-${currentPage}`}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.3 }}
+              className="w-full grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6"
+            >
+              {currentImages.map((img, i) => (
+                <div key={i} className="w-full aspect-[9/16] bg-[#0a0a0a] rounded-3xl overflow-hidden border border-white/10 flex items-center justify-center p-2 shadow-xl hover:scale-[1.02] transition-transform duration-300">
+                  <img src={img} alt={`UI mock ${currentPage * itemsPerPage + i}`} className="w-full h-full object-contain" />
+                </div>
+              ))}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Right Desktop Navigation */}
+        <button
+          onClick={handleNext}
+          className="hidden md:flex size-12 lg:size-14 justify-center items-center rounded-full bg-[#050505] border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.8)] text-white hover:bg-white hover:text-black transition-all active:scale-95 flex-shrink-0"
+        >
+          <ArrowRight size={20} />
+        </button>
+      </div>
+
+      {/* Pagination indicators and Mobile Navigation */}
+      <div className="flex items-center gap-6 mt-10">
+        <button
+          onClick={handlePrev}
+          className="md:hidden size-12 flex justify-center items-center rounded-full bg-white/5 border border-white/10 text-white hover:bg-white hover:text-black transition-all active:scale-95"
+        >
+          <ArrowRight className="transform rotate-180" size={20} />
+        </button>
+
+        <div className="flex gap-2">
+          {Array.from({ length: totalPages }).map((_, idx) => (
+            <div
+              key={idx}
+              className={`h-1.5 rounded-full transition-all duration-300 ${currentPage === idx ? 'w-6 bg-white' : 'w-2 bg-white/20'}`}
+            />
+          ))}
+        </div>
+
+        <button
+          onClick={handleNext}
+          className="md:hidden size-12 flex justify-center items-center rounded-full bg-white/5 border border-white/10 text-white hover:bg-white hover:text-black transition-all active:scale-95"
+        >
+          <ArrowRight size={20} />
+        </button>
+      </div>
+    </div>
+  )
+}
+
+function ChurchPostersView() {
+  const posterProject = PROJECTS[4];
+  const images = posterProject.imageGallery || [];
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const handleNext = () => setCurrentIndex((prev) => (prev + 1) % images.length);
+  const handlePrev = () => setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+
+  return (
+    <div className="flex flex-col items-center gap-8 w-full p-4">
+      <div className="relative w-full max-w-5xl h-[60vh] md:h-[80vh] bg-white/[0.02] rounded-[40px] overflow-hidden border border-white/10 shadow-[0_0_120px_rgba(255,255,255,0.03)] flex items-center justify-center group">
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={currentIndex}
+            src={images[currentIndex]}
+            alt={`Poster ${currentIndex + 1}`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="w-full h-full object-contain p-4 md:p-8"
+          />
+        </AnimatePresence>
+
+        <div className="absolute inset-y-0 left-0 w-1/4 flex items-center justify-start opacity-0 group-hover:opacity-100 transition-opacity p-4 md:p-8">
+          <button onClick={handlePrev} className="size-10 md:size-14 flex justify-center items-center bg-black/50 backdrop-blur-md text-white rounded-full border border-white/10 hover:bg-white/20 transition-all shadow-xl active:scale-95">
+            <ArrowRight className="transform rotate-180" size={20} />
+          </button>
+        </div>
+        <div className="absolute inset-y-0 right-0 w-1/4 flex items-center justify-end opacity-0 group-hover:opacity-100 transition-opacity p-4 md:p-8">
+          <button onClick={handleNext} className="size-10 md:size-14 flex justify-center items-center bg-black/50 backdrop-blur-md text-white rounded-full border border-white/10 hover:bg-white/20 transition-all shadow-xl active:scale-95">
+            <ArrowRight size={20} />
+          </button>
+        </div>
+      </div>
+
+      <div className="flex items-center justify-between w-full max-w-4xl px-4 mt-4">
+        <span className="text-white/40 text-[10px] md:text-sm font-black tracking-[0.2em] uppercase">
+          {currentIndex + 1} / {images.length}
+        </span>
+        <button
+          onClick={handleNext}
+          className="h-12 md:h-14 px-6 md:px-8 rounded-full bg-white/5 border border-white/10 hover:bg-white hover:text-black hover:border-white text-white font-black uppercase tracking-[0.2em] text-[10px] md:text-xs transition-all flex items-center gap-2 active:scale-95"
+        >
+          Next Poster <ArrowRight size={14} />
+        </button>
+      </div>
+    </div>
+  )
+}
+
+function VideoEditingView() {
+  const videoProjects = PROJECTS.slice(6, 7);
+
+  return (
+    <div className="flex flex-col items-center">
+      <div className="w-full">
+        {videoProjects.map((project, idx) => (
+          <ProjectItem key={idx} project={project} className="mb-0" />
+        ))}
+      </div>
+    </div>
+  )
+}
+
 function ProjectSection() {
   return (
     <section id="projects" className="min-h-screen flex flex-col justify-center pt-28 pb-12 md:py-32 px-6">
@@ -289,15 +649,27 @@ function ProjectSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-4xl md:text-8xl font-black text-center mb-10 md:mb-16 text-white tracking-tighter"
+          className="text-4xl md:text-8xl font-black text-left md:text-center mb-16 md:mb-32 text-white tracking-tighter"
         >
           PROJECTS<span className="text-white/10">.</span>
         </motion.h2>
 
-        <div className="space-y-32 md:space-y-64">
-          {PROJECTS.map((project, idx) => (
-            <ProjectItem key={idx} project={project} />
-          ))}
+        <div className="w-full">
+          <CollapsibleSection title="Website Projects" defaultOpen={true}>
+            <WebsiteProjectsView />
+          </CollapsibleSection>
+
+          <CollapsibleSection title="Mobile UI/UX Design">
+            <MobileProjectsView />
+          </CollapsibleSection>
+
+          <CollapsibleSection title="Video Editing">
+            <VideoEditingView />
+          </CollapsibleSection>
+
+          <CollapsibleSection title="Church Poster Design">
+            <ChurchPostersView />
+          </CollapsibleSection>
         </div>
       </div>
     </section>
